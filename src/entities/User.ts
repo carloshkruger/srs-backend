@@ -33,4 +33,12 @@ export class User extends Entity<UserProps> {
       id
     )
   }
+
+  public updateName(name: string): void {
+    this.props.name = name
+  }
+
+  public updateEmail(email: string): void {
+    this.props.email = email
+  }
 }

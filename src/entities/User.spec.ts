@@ -13,4 +13,20 @@ describe('User', () => {
     expect(user.password).toBe('123456')
     expect(user.id).toEqual(expect.any(String))
   })
+
+  it('should update values', () => {
+    const user = User.create({
+      name: 'name test',
+      email: 'email_test@email.com',
+      password: '123456'
+    })
+
+    user.updateName('new name')
+    user.updateEmail('newemail@email.com')
+
+    expect(user.name).toBe('new name')
+    expect(user.email).toBe('newemail@email.com')
+    expect(user.password).toBe('123456')
+    expect(user.id).toEqual(expect.any(String))
+  })
 })
