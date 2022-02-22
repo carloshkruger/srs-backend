@@ -10,6 +10,14 @@
     "emitDecoratorMetadata": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "paths": {
+      "@api/*": ["api/*"],
+      "@entities/*": ["entities/*"],
+      "@infra/*": ["infra/*"],
+      "@providers/*": ["providers/*"],
+      "@repositories/*": ["repositories/*"],
+      "@useCases/*": ["useCases/*"]
+    }
   }
 }
