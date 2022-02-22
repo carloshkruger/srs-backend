@@ -1,23 +1,22 @@
 import { User } from '@entities/User'
 import { HashProvider } from '@providers/HashProvider/HashProvider.interface'
 import { UsersRepository } from '@repositories/UsersRepository'
+import { EmailAlreadyRegistered } from '@useCases/errors'
 import { UseCase } from '@useCases/UseCase.interface'
-import { EmailAlreadyRegistered } from './CreateUserWithEmailAndPassword.errors'
-import { CreateUserWithEmailAndPasswordRequest } from './CreateUserWithEmailAndPassword.request'
 
-export class CreateUserWithEmailAndPassword
-  implements UseCase<CreateUserWithEmailAndPasswordRequest, User>
-{
+export interface Request {
+  name: string
+  email: string
+  password: string
+}
+
+export class CreateUserWithEmailAndPassword implements UseCase<Request, User> {
   constructor(
     private usersRepository: UsersRepository,
     private hashProvider: HashProvider
   ) {}
 
-  async execute({
-    name,
-    email,
-    password
-  }: CreateUserWithEmailAndPasswordRequest): Promise<User> {
+  async execute({ name, email, password }: Request): Promise<User> {
     const userByEmail = await this.usersRepository.findByEmail(email)
 
     if (userByEmail) {

@@ -4,7 +4,7 @@ import { HashProviderStub } from '@providers/HashProvider/HashProviderStub'
 import { UsersRepositoryStub } from '@repositories/stubs/UsersRepositoryStub'
 import { UsersRepository } from '@repositories/UsersRepository'
 import { CreateUserWithEmailAndPassword } from './CreateUserWithEmailAndPassword'
-import { EmailAlreadyRegistered } from './CreateUserWithEmailAndPassword.errors'
+import { EmailAlreadyRegistered } from './errors'
 
 describe('CreateUserWithEmailAndPassword', () => {
   let createUserWithEmailAndPassword: CreateUserWithEmailAndPassword

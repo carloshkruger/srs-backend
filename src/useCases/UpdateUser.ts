@@ -1,13 +1,17 @@
 import { UsersRepository } from '@repositories/UsersRepository'
-import { EmailAlreadyRegistered } from '@useCases/CreateUserWithEmailAndPassword/CreateUserWithEmailAndPassword.errors'
+import { EmailAlreadyRegistered, UserNotFound } from '@useCases/errors'
 import { UseCase } from '@useCases/UseCase.interface'
-import { UserNotFound } from './UpdateUser.errors'
-import { UpdateUserRequest } from './UpdateUser.request'
 
-export class UpdateUser implements UseCase<UpdateUserRequest, void> {
+export interface Request {
+  id: string
+  name: string
+  email: string
+}
+
+export class UpdateUser implements UseCase<Request, void> {
   constructor(private usersRepository: UsersRepository) {}
 
-  async execute({ id, name, email }: UpdateUserRequest): Promise<void> {
+  async execute({ id, name, email }: Request): Promise<void> {
     const userById = await this.usersRepository.findById(id)
 
     if (!userById) {

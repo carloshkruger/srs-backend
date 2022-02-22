@@ -1,9 +1,8 @@
 import { User } from '@entities/User'
 import { UsersRepositoryStub } from '@repositories/stubs/UsersRepositoryStub'
 import { UsersRepository } from '@repositories/UsersRepository'
-import { EmailAlreadyRegistered } from '@useCases/CreateUserWithEmailAndPassword/CreateUserWithEmailAndPassword.errors'
+import { EmailAlreadyRegistered, UserNotFound } from './errors'
 import { UpdateUser } from './UpdateUser'
-import { UserNotFound } from './UpdateUser.errors'
 
 describe('UpdateUser', () => {
   let updateUser: UpdateUser
