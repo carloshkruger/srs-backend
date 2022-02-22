@@ -1,7 +1,9 @@
+import { Request } from 'express'
+
 abstract class Controller {
-  public async execute(props: ControllerRequest): Promise<ControllerResponse> {
+  public async execute(request: Request): Promise<ControllerResponse> {
     try {
-      const response = await this.handle(props)
+      const response = await this.handle(request)
 
       return response
     } catch (error) {
@@ -9,9 +11,7 @@ abstract class Controller {
     }
   }
 
-  protected abstract handle(
-    props: ControllerRequest
-  ): Promise<ControllerResponse>
+  protected abstract handle(request: Request): Promise<ControllerResponse>
 
   protected ok(data: any): ControllerResponse {
     return {
@@ -33,7 +33,7 @@ abstract class Controller {
     }
   }
 
-  protected serverError(error: Error): ControllerResponse {
+  protected serverError(): ControllerResponse {
     return {
       statusCode: 500,
       body: {
@@ -51,23 +51,9 @@ abstract class Controller {
         }
       }
     } catch {
-      return this.serverError(error)
+      return this.serverError()
     }
   }
-}
-
-interface RequestData {
-  [key: string]: any
-}
-
-interface RequestFile {
-  filename: string
-}
-
-interface ControllerRequest {
-  data: RequestData
-  files?: RequestFile[]
-  loggedUserId?: string
 }
 
 interface ControllerResponse {
@@ -75,4 +61,4 @@ interface ControllerResponse {
   body?: any
 }
 
-export { Controller, ControllerRequest, ControllerResponse }
+export { Controller, ControllerResponse }

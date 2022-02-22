@@ -1,6 +1,7 @@
 import { UsersRepositoryStub } from '@repositories/stubs/UsersRepositoryStub'
 import { UsersRepository } from '@repositories/UsersRepository'
 import { UpdateUser } from '@useCases/UpdateUser'
+import { Request } from 'express'
 import { UpdateUserController } from './UpdateUser'
 
 describe('UpdateUser', () => {
@@ -18,12 +19,14 @@ describe('UpdateUser', () => {
     jest.spyOn(useCase, 'execute').mockResolvedValue()
 
     const response = await controller.handle({
-      data: {
-        id: '123123',
+      body: {
         name: 'Test User',
         email: 'testuser@email.com'
+      },
+      params: {
+        id: '123123'
       }
-    })
+    } as unknown as Request)
 
     expect(response.statusCode).toBe(204)
     expect(response.body).toBeFalsy()

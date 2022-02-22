@@ -4,6 +4,7 @@ import { HashProviderStub } from '@providers/HashProvider/HashProviderStub'
 import { UsersRepositoryStub } from '@repositories/stubs/UsersRepositoryStub'
 import { UsersRepository } from '@repositories/UsersRepository'
 import { CreateUserWithEmailAndPassword } from '@useCases/CreateUserWithEmailAndPassword'
+import { Request } from 'express'
 import { CreateUserWithEmailAndPasswordController } from './CreateUserWithEmailAndPassword'
 
 describe('CreateUserWithEmailAndPassword', () => {
@@ -34,12 +35,12 @@ describe('CreateUserWithEmailAndPassword', () => {
     )
 
     const response = await controller.handle({
-      data: {
+      body: {
         name: 'Test User',
         email: 'testuser@email.com',
         password: '123456'
       }
-    })
+    } as Request)
 
     expect(response.statusCode).toBe(201)
     expect(response.body.id).toBe(userId)

@@ -1,13 +1,14 @@
 import { CreateUserWithEmailAndPassword } from '@useCases/CreateUserWithEmailAndPassword'
-import { Controller, ControllerRequest, ControllerResponse } from './Controller'
+import { Request } from 'express'
+import { Controller, ControllerResponse } from './Controller'
 
 export class CreateUserWithEmailAndPasswordController extends Controller {
   constructor(private useCase: CreateUserWithEmailAndPassword) {
     super()
   }
 
-  public async handle(props: ControllerRequest): Promise<ControllerResponse> {
-    const { name, email, password } = props.data
+  public async handle(request: Request): Promise<ControllerResponse> {
+    const { name, email, password } = request.body
 
     const user = await this.useCase.execute({ name, email, password })
 

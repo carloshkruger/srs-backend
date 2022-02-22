@@ -1,13 +1,15 @@
 import { UpdateUser } from '@useCases/UpdateUser'
-import { Controller, ControllerRequest, ControllerResponse } from './Controller'
+import { Request } from 'express'
+import { Controller, ControllerResponse } from './Controller'
 
 export class UpdateUserController extends Controller {
   constructor(private useCase: UpdateUser) {
     super()
   }
 
-  public async handle(props: ControllerRequest): Promise<ControllerResponse> {
-    const { id, name, email } = props.data
+  public async handle(request: Request): Promise<ControllerResponse> {
+    const { id } = request.params
+    const { name, email } = request.body
 
     await this.useCase.execute({ id, name, email })
 
