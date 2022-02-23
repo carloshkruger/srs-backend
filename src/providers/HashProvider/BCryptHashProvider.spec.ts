@@ -1,5 +1,5 @@
 import { BCryptHashProvider } from './BCryptHashProvider'
-import { hash } from 'bcrypt'
+import { hash, compare } from 'bcrypt'
 
 jest.mock('bcrypt')
 
@@ -10,9 +10,16 @@ describe('BCryptHashProvider', () => {
     bCryptHashProvider = new BCryptHashProvider()
   })
 
-  it('should call the library function with correct params', async () => {
-    const result = await bCryptHashProvider.hash('text')
-    expect(result).not.toBe('text')
+  it('should call the library function with correct param to create a hash', async () => {
+    await bCryptHashProvider.hash('text')
     expect(hash).toHaveBeenCalledWith('text', 10)
+  })
+
+  it('should call the library function with correct params to compare', async () => {
+    await bCryptHashProvider.compare({
+      plainText: 'plain_text',
+      hashText: 'hash_text'
+    })
+    expect(compare).toHaveBeenCalledWith('plain_text', 'hash_text')
   })
 })
