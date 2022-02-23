@@ -40,7 +40,7 @@ describe('CreateDeckUseCase', () => {
       })
     )
 
-    jest.spyOn(decksRepository, 'findByName').mockResolvedValue(
+    jest.spyOn(decksRepository, 'findByNameAndUserId').mockResolvedValue(
       Deck.create({
         userId: '123456',
         name: 'Deck name',
@@ -66,7 +66,9 @@ describe('CreateDeckUseCase', () => {
         password: '123456'
       })
     )
-    jest.spyOn(decksRepository, 'findByName').mockResolvedValue(undefined)
+    jest
+      .spyOn(decksRepository, 'findByNameAndUserId')
+      .mockResolvedValue(undefined)
 
     await expect(
       createDeckUseCase.execute({

@@ -24,7 +24,10 @@ export class CreateDeckUseCase implements UseCase<Request, Deck> {
       throw new UserNotFound()
     }
 
-    const deckByName = await this.decksRepository.findByName(name)
+    const deckByName = await this.decksRepository.findByNameAndUserId(
+      name,
+      userId
+    )
 
     if (deckByName) {
       throw new DeckNameAlreadyRegistered(name)
