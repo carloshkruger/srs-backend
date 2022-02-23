@@ -26,4 +26,12 @@ export class Deck extends Entity<DeckProps> {
   public static create(props: DeckProps, id?: string): Deck {
     return new Deck(props, id)
   }
+
+  public updateName(name: string): void {
+    this.props.name = name
+  }
+
+  public updateDescription(description: string): void {
+    this.props.description = description
+  }
 }

@@ -2,6 +2,9 @@ import { Deck } from '@entities/Deck'
 import { DecksRepository } from '@repositories/DecksRepository'
 
 export class DecksRepositoryStub implements DecksRepository {
+  async findById(): Promise<Deck> {
+    return Promise.resolve(undefined)
+  }
   async findByNameAndUserId(): Promise<Deck> {
     return Promise.resolve(undefined)
   }
