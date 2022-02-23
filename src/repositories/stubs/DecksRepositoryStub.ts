@@ -11,4 +11,7 @@ export class DecksRepositoryStub implements DecksRepository {
   async save(): Promise<void> {
     return Promise.resolve(undefined)
   }
+  async deleteById(): Promise<void> {
+    return Promise.resolve(undefined)
+  }
 }

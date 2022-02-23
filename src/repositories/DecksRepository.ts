@@ -4,4 +4,5 @@ export interface DecksRepository {
   findById(deckId: string): Promise<Deck>
   findByNameAndUserId(name: string, userId: string): Promise<Deck>
   save(deck: Deck): Promise<void>
+  deleteById(deckId: string): Promise<void>
 }
