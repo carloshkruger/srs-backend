@@ -1,4 +1,6 @@
+import { randomUUID } from 'crypto'
 import { Card } from '@entities/Card'
+import { TextToSpeechProvider } from '@providers/TextToSpeechProvider/TextToSpeechProvider.interface'
 import { CardsRepository } from '@repositories/CardsRepository'
 import { DecksRepository } from '@repositories/DecksRepository'
 import {
@@ -7,6 +9,7 @@ import {
   MaximumDailyCardsCreationReached
 } from './errors'
 import { UseCase } from './UseCase.interface'
+import { StorageProvider } from '@providers/StorageProvider/StorageProvider.interface'
 
 interface Request {
   userId: string
@@ -20,7 +23,9 @@ export const MAXIMUM_DAILY_CARDS_CREATION_PER_USER = 15
 export class CreateCardUseCase implements UseCase<Request, Card> {
   constructor(
     private decksRepository: DecksRepository,
-    private cardsRepository: CardsRepository
+    private cardsRepository: CardsRepository,
+    private textToSpeechProvider: TextToSpeechProvider,
+    private storageProvider: StorageProvider
   ) {}
 
   async execute({
@@ -52,14 +57,37 @@ export class CreateCardUseCase implements UseCase<Request, Card> {
       throw new CardOriginalTextAlreadyCreated()
     }
 
+    const audioFileName = `${randomUUID()}.mp3`
+
     const card = Card.create({
       deckId,
       originalText,
       translatedText,
-      audioFileName: ''
+      audioFileName
     })
 
-    await this.cardsRepository.save(card)
+    const audioBuffer = await this.textToSpeechProvider.createAudio(
+      originalText
+    )
+
+    const filePath = ['users', userId, 'decks', deckId, 'cards', card.id]
+
+    await this.storageProvider.saveFileFromBuffer({
+      fileName: audioFileName,
+      bufferContent: audioBuffer,
+      filePath
+    })
+
+    try {
+      await this.cardsRepository.save(card)
+    } catch (error) {
+      await this.storageProvider.deleteFile({
+        fileName: audioFileName,
+        filePath
+      })
+
+      throw error
+    }
 
     return card
   }

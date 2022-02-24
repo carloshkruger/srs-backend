@@ -1,4 +1,4 @@
-import { FileInfo, StorageProvider } from './StorageProvider.interface'
+import { StorageProvider } from './StorageProvider.interface'
 
 export class StorageProviderStub implements StorageProvider {
   async saveFileFromBuffer(): Promise<void> {

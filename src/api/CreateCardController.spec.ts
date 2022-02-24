@@ -1,4 +1,8 @@
 import { Card } from '@entities/Card'
+import { StorageProvider } from '@providers/StorageProvider/StorageProvider.interface'
+import { StorageProviderStub } from '@providers/StorageProvider/StorageProviderStub'
+import { TextToSpeechProvider } from '@providers/TextToSpeechProvider/TextToSpeechProvider.interface'
+import { TextToSpeechProviderStub } from '@providers/TextToSpeechProvider/TextToSpeechProviderStub'
 import { CardsRepository } from '@repositories/CardsRepository'
 import { DecksRepository } from '@repositories/DecksRepository'
 import { CardsRepositoryStub } from '@repositories/stubs/CardsRepositoryStub'
@@ -12,11 +16,20 @@ describe('CreateCardController', () => {
   let useCase: CreateCardUseCase
   let decksRepository: DecksRepository
   let cardsRepository: CardsRepository
+  let textToSpeechProvider: TextToSpeechProvider
+  let storageProvider: StorageProvider
 
   beforeEach(() => {
     decksRepository = new DecksRepositoryStub()
     cardsRepository = new CardsRepositoryStub()
-    useCase = new CreateCardUseCase(decksRepository, cardsRepository)
+    textToSpeechProvider = new TextToSpeechProviderStub()
+    storageProvider = new StorageProviderStub()
+    useCase = new CreateCardUseCase(
+      decksRepository,
+      cardsRepository,
+      textToSpeechProvider,
+      storageProvider
+    )
     controller = new CreateCardController(useCase)
   })
 

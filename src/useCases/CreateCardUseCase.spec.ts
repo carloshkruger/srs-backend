@@ -1,5 +1,9 @@
 import { Card } from '@entities/Card'
 import { Deck } from '@entities/Deck'
+import { StorageProvider } from '@providers/StorageProvider/StorageProvider.interface'
+import { StorageProviderStub } from '@providers/StorageProvider/StorageProviderStub'
+import { TextToSpeechProvider } from '@providers/TextToSpeechProvider/TextToSpeechProvider.interface'
+import { TextToSpeechProviderStub } from '@providers/TextToSpeechProvider/TextToSpeechProviderStub'
 import { CardsRepository } from '@repositories/CardsRepository'
 import { DecksRepository } from '@repositories/DecksRepository'
 import { CardsRepositoryStub } from '@repositories/stubs/CardsRepositoryStub'
@@ -18,11 +22,20 @@ describe('CreateDeckUseCase', () => {
   let createCardUseCase: CreateCardUseCase
   let decksRepository: DecksRepository
   let cardsRepository: CardsRepository
+  let textToSpeechProvider: TextToSpeechProvider
+  let storageProvider: StorageProvider
 
   beforeEach(() => {
     decksRepository = new DecksRepositoryStub()
     cardsRepository = new CardsRepositoryStub()
-    createCardUseCase = new CreateCardUseCase(decksRepository, cardsRepository)
+    textToSpeechProvider = new TextToSpeechProviderStub()
+    storageProvider = new StorageProviderStub()
+    createCardUseCase = new CreateCardUseCase(
+      decksRepository,
+      cardsRepository,
+      textToSpeechProvider,
+      storageProvider
+    )
   })
 
   it('should throw if deck does not exists', async () => {
@@ -103,6 +116,11 @@ describe('CreateDeckUseCase', () => {
   })
 
   it('should save the card', async () => {
+    const audioBufferMock = Buffer.from('audio binary data')
+    const createAudioSpy = jest
+      .spyOn(textToSpeechProvider, 'createAudio')
+      .mockResolvedValue(audioBufferMock)
+    const saveFileSpy = jest.spyOn(storageProvider, 'saveFileFromBuffer')
     const saveSpy = jest.spyOn(cardsRepository, 'save')
     jest.spyOn(decksRepository, 'findById').mockResolvedValue(
       Deck.create({
@@ -121,5 +139,52 @@ describe('CreateDeckUseCase', () => {
       })
     ).resolves.toBeInstanceOf(Card)
     expect(saveSpy).toHaveBeenCalled()
+    expect(createAudioSpy).toHaveBeenCalledWith('original text')
+    expect(saveFileSpy).toHaveBeenCalledWith({
+      fileName: expect.any(String),
+      bufferContent: audioBufferMock,
+      filePath: [
+        'users',
+        '123456',
+        'decks',
+        '123456',
+        'cards',
+        expect.any(String)
+      ]
+    })
+  })
+
+  it('should delete the file on storage if occurs any error trying to save on database', async () => {
+    const error = new Error('test error')
+    const deleteFileSpy = jest.spyOn(storageProvider, 'deleteFile')
+    const saveSpy = jest.spyOn(cardsRepository, 'save').mockRejectedValue(error)
+    jest.spyOn(decksRepository, 'findById').mockResolvedValue(
+      Deck.create({
+        name: 'Deck name',
+        userId: '123456',
+        description: 'Deck description'
+      })
+    )
+
+    await expect(
+      createCardUseCase.execute({
+        userId: '123456',
+        deckId: '123456',
+        originalText: 'original text',
+        translatedText: 'translated text'
+      })
+    ).rejects.toThrow(error)
+    expect(saveSpy).toHaveBeenCalled()
+    expect(deleteFileSpy).toHaveBeenCalledWith({
+      fileName: expect.any(String),
+      filePath: [
+        'users',
+        '123456',
+        'decks',
+        '123456',
+        'cards',
+        expect.any(String)
+      ]
+    })
   })
 })
