@@ -8,4 +8,7 @@ export class CardsRepositoryStub implements CardsRepository {
   async findByDeckIdAndOriginalText(): Promise<Card> {
     return Promise.resolve(undefined)
   }
+  async countCardsCreatedTodayByUser(): Promise<number> {
+    return Promise.resolve(0)
+  }
 }

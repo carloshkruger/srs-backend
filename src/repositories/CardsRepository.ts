@@ -6,4 +6,5 @@ export interface CardsRepository {
     deckId: string,
     originalText: string
   ): Promise<Card>
+  countCardsCreatedTodayByUser(userId: string): Promise<number>
 }

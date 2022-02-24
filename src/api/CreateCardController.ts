@@ -9,8 +9,10 @@ export class CreateCardController extends Controller {
 
   public async handle(request: Request): Promise<ControllerResponse> {
     const { deckId, originalText, translatedText } = request.body
+    const userId = request.user.id
 
     const card = await this.useCase.execute({
+      userId,
       deckId,
       originalText,
       translatedText

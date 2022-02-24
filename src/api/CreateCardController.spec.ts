@@ -35,6 +35,9 @@ describe('CreateCardController', () => {
         deckId: '123456',
         originalText: 'original text',
         translatedText: 'translated text'
+      },
+      user: {
+        id: '123456'
       }
     } as Request)
 

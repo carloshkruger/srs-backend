@@ -1,14 +1,21 @@
 import { Card } from '@entities/Card'
 import { CardsRepository } from '@repositories/CardsRepository'
 import { DecksRepository } from '@repositories/DecksRepository'
-import { CardOriginalTextAlreadyCreated, DeckNotFound } from './errors'
+import {
+  CardOriginalTextAlreadyCreated,
+  DeckNotFound,
+  MaximumDailyCardsCreationReached
+} from './errors'
 import { UseCase } from './UseCase.interface'
 
 interface Request {
+  userId: string
   deckId: string
   originalText: string
   translatedText: string
 }
+
+export const MAXIMUM_DAILY_CARDS_CREATION_PER_USER = 15
 
 export class CreateCardUseCase implements UseCase<Request, Card> {
   constructor(
@@ -17,6 +24,7 @@ export class CreateCardUseCase implements UseCase<Request, Card> {
   ) {}
 
   async execute({
+    userId,
     deckId,
     originalText,
     translatedText
@@ -25,6 +33,13 @@ export class CreateCardUseCase implements UseCase<Request, Card> {
 
     if (!deck) {
       throw new DeckNotFound()
+    }
+
+    const countCardsCreationToday =
+      await this.cardsRepository.countCardsCreatedTodayByUser(userId)
+
+    if (countCardsCreationToday >= MAXIMUM_DAILY_CARDS_CREATION_PER_USER) {
+      throw new MaximumDailyCardsCreationReached()
     }
 
     const cardByOriginalText =
