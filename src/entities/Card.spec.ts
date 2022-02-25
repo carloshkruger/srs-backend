@@ -35,7 +35,7 @@ describe('Card', () => {
     expect(card.id).toEqual(expect.any(String))
   })
 
-  it('getFilePathToStorageAudioFile', () => {
+  it('getFilePathToStorage', () => {
     const card = Card.create({
       deckId: '123456',
       originalText: 'original text',
@@ -45,7 +45,7 @@ describe('Card', () => {
 
     const userId = '123'
 
-    const path = card.getFilePathToStorageAudioFile(userId)
+    const path = card.getFilePathToStorage(userId)
 
     expect(path).toEqual(['users', userId, 'decks', '123456', 'cards', card.id])
   })

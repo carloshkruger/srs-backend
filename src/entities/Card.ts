@@ -51,7 +51,7 @@ export class Card extends Entity<CardProps> {
     this.props.audioFileName = audioFileName
   }
 
-  public getFilePathToStorageAudioFile(userId: string): string[] {
+  public getFilePathToStorage(userId: string): string[] {
     return ['users', userId, 'decks', this.deckId, 'cards', this.id]
   }
 }

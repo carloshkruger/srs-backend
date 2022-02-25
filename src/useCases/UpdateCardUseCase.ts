@@ -65,7 +65,7 @@ export class UpdateCardUseCase implements UseCase<Request, void> {
 
     if (hasOriginalTextChanged) {
       const audioFileName = `${randomUUID()}.mp3`
-      const filePath = card.getFilePathToStorageAudioFile(userId)
+      const filePath = card.getFilePathToStorage(userId)
       const audioBuffer = await this.textToSpeechProvider.createAudio(
         originalText
       )

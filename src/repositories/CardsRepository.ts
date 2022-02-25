@@ -8,4 +8,5 @@ export interface CardsRepository {
     originalText: string
   ): Promise<Card>
   countCardsCreatedTodayByUser(userId: string): Promise<number>
+  deleteById(id: string): Promise<void>
 }

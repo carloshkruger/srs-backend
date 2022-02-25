@@ -14,4 +14,7 @@ export class CardsRepositoryStub implements CardsRepository {
   async countCardsCreatedTodayByUser(): Promise<number> {
     return Promise.resolve(0)
   }
+  async deleteById(): Promise<void> {
+    return Promise.resolve(undefined)
+  }
 }
