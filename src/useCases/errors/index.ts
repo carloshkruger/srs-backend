@@ -4,6 +4,8 @@ import { DeckNotFound } from './DeckNotFound'
 import { DeckDoesNotBelongToTheUser } from './DeckDoesNotBelongToTheUser'
 import { CardOriginalTextAlreadyCreated } from './CardOriginalTextAlreadyCreated'
 import { MaximumDailyCardsCreationReached } from './MaximumDailyCardsCreationReached'
+import { CardNotFound } from './CardNotFound'
+import { CardDoesNotBelongToTheUser } from './CardDoesNotBelongToTheUser'
 
 export {
   UserNotFound,
@@ -11,5 +13,7 @@ export {
   DeckNotFound,
   DeckDoesNotBelongToTheUser,
   CardOriginalTextAlreadyCreated,
-  MaximumDailyCardsCreationReached
+  MaximumDailyCardsCreationReached,
+  CardNotFound,
+  CardDoesNotBelongToTheUser
 }

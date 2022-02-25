@@ -70,7 +70,7 @@ export class CreateCardUseCase implements UseCase<Request, Card> {
       originalText
     )
 
-    const filePath = ['users', userId, 'decks', deckId, 'cards', card.id]
+    const filePath = card.getFilePathToStorageAudioFile(userId)
 
     await this.storageProvider.saveFileFromBuffer({
       fileName: audioFileName,

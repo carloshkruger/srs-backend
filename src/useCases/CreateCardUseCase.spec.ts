@@ -18,7 +18,7 @@ import {
   MaximumDailyCardsCreationReached
 } from './errors'
 
-describe('CreateDeckUseCase', () => {
+describe('CreateCardUseCase', () => {
   let createCardUseCase: CreateCardUseCase
   let decksRepository: DecksRepository
   let cardsRepository: CardsRepository

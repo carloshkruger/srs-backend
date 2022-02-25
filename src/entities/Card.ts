@@ -38,4 +38,20 @@ export class Card extends Entity<CardProps> {
       id
     )
   }
+
+  public updateOriginalText(originalText: string): void {
+    this.props.originalText = originalText
+  }
+
+  public updateTranslatedText(translatedText: string): void {
+    this.props.translatedText = translatedText
+  }
+
+  public updateAudioFileName(audioFileName: string): void {
+    this.props.audioFileName = audioFileName
+  }
+
+  public getFilePathToStorageAudioFile(userId: string): string[] {
+    return ['users', userId, 'decks', this.deckId, 'cards', this.id]
+  }
 }
