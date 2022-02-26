@@ -26,6 +26,7 @@
   "homepage": "https://github.com/carloshkruger/srs-backend#readme",
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",
+    "@types/dotenv": "^8.2.0",
     "@types/express": "^4.17.13",
     "@types/jest": "27.4.0",
     "@types/node": "^17.0.21",
@@ -46,6 +47,7 @@
   },
   "dependencies": {
     "bcrypt": "^5.0.1",
+    "dotenv": "^16.0.0",
     "express": "^4.17.3"
   }
 }
