@@ -17,7 +17,8 @@
       "@infra/*": ["infra/*"],
       "@providers/*": ["providers/*"],
       "@repositories/*": ["repositories/*"],
-      "@useCases/*": ["useCases/*"]
+      "@useCases/*": ["useCases/*"],
+      "@shared/*": ["shared/*"]
     }
   }
 }
