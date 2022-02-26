@@ -6,6 +6,8 @@ import { CardOriginalTextAlreadyCreated } from './CardOriginalTextAlreadyCreated
 import { MaximumDailyCardsCreationReached } from './MaximumDailyCardsCreationReached'
 import { CardNotFound } from './CardNotFound'
 import { CardDoesNotBelongToTheUser } from './CardDoesNotBelongToTheUser'
+import { TokenNotFound } from './TokenNotFound'
+import { TokenExpired } from './TokenExpired'
 
 export {
   UserNotFound,
@@ -15,5 +17,7 @@ export {
   CardOriginalTextAlreadyCreated,
   MaximumDailyCardsCreationReached,
   CardNotFound,
-  CardDoesNotBelongToTheUser
+  CardDoesNotBelongToTheUser,
+  TokenNotFound,
+  TokenExpired
 }

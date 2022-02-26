@@ -5,7 +5,10 @@ export class UserTokensRepositoryStub implements UserTokensRepository {
   save(): Promise<void> {
     return Promise.resolve(undefined)
   }
-  findByIdToken(): Promise<UserToken> {
+  findByToken(): Promise<UserToken> {
+    return Promise.resolve(undefined)
+  }
+  deleteById(): Promise<void> {
     return Promise.resolve(undefined)
   }
 }

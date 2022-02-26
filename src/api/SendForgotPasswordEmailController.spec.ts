@@ -4,10 +4,8 @@ import { UsersRepositoryStub } from '@repositories/stubs/UsersRepositoryStub'
 import { UserTokensRepositoryStub } from '@repositories/stubs/UserTokensRepositoryStub'
 import { UsersRepository } from '@repositories/UsersRepository'
 import { UserTokensRepository } from '@repositories/UserTokensRepository'
-import { DeleteUserUseCase } from '@useCases/DeleteUserUseCase'
 import { SendForgotPasswordEmailUseCase } from '@useCases/SendForgotPasswordEmailUseCase'
 import { Request } from 'express'
-import { DeleteUserController } from './DeleteUserController'
 import { SendForgotPasswordEmailController } from './SendForgotPasswordEmailController'
 
 describe('SendForgotPasswordEmailController', () => {
