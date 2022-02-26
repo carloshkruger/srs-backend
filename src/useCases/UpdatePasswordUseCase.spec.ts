@@ -1,4 +1,4 @@
-import { User } from '@entities/User'
+import { UserMockBuilder } from '@entities/mocks/UserMockBuilder'
 import { HashProvider } from '@providers/HashProvider/HashProvider.interface'
 import { HashProviderStub } from '@providers/HashProvider/HashProviderStub'
 import { UsersRepositoryStub } from '@repositories/stubs/UsersRepositoryStub'
@@ -36,13 +36,9 @@ describe('UpdatePasswordUseCase', () => {
 
   it('should throw an error if the current password is incorrect', async () => {
     const saveSpy = jest.spyOn(usersRepository, 'save')
-    jest.spyOn(usersRepository, 'findById').mockResolvedValue(
-      User.create({
-        name: 'Test User',
-        email: 'testuser@email.com',
-        password: '123456'
-      })
-    )
+    jest
+      .spyOn(usersRepository, 'findById')
+      .mockResolvedValue(UserMockBuilder.aUser().build())
     jest.spyOn(hashProvider, 'compare').mockResolvedValue(false)
 
     await expect(
@@ -59,13 +55,9 @@ describe('UpdatePasswordUseCase', () => {
     const saveSpy = jest.spyOn(usersRepository, 'save')
     const hashSpy = jest.spyOn(hashProvider, 'hash')
 
-    jest.spyOn(usersRepository, 'findById').mockResolvedValue(
-      User.create({
-        name: 'Test User',
-        email: 'testuser@email.com',
-        password: '123456'
-      })
-    )
+    jest
+      .spyOn(usersRepository, 'findById')
+      .mockResolvedValue(UserMockBuilder.aUser().build())
     jest.spyOn(hashProvider, 'compare').mockResolvedValue(true)
 
     const currentPassword = 'current_password'

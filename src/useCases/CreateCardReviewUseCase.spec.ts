@@ -1,7 +1,6 @@
 import { Card } from '@entities/Card'
 import { CardReviewDifficultyLevel } from '@entities/enums/CardReviewDifficultyLevel'
 import { Deck } from '@entities/Deck'
-import { User } from '@entities/User'
 import { CardsRepository } from '@repositories/CardsRepository'
 import { DecksRepository } from '@repositories/DecksRepository'
 import { CardsRepositoryStub } from '@repositories/stubs/CardsRepositoryStub'
@@ -14,6 +13,7 @@ import {
   CardNotFound,
   UserNotFound
 } from './errors'
+import { UserMockBuilder } from '@entities/mocks/UserMockBuilder'
 
 describe('CreateCardReviewUseCase', () => {
   let createCardReviewUseCase: CreateCardReviewUseCase
@@ -50,12 +50,9 @@ describe('CreateCardReviewUseCase', () => {
   it('should throw if the card does not exists', async () => {
     const saveSpy = jest.spyOn(cardsRepository, 'save')
 
-    jest.spyOn(usersRepository, 'findById').mockResolvedValue(
-      User.create({
-        email: 'email@email.com',
-        name: 'test user'
-      })
-    )
+    jest
+      .spyOn(usersRepository, 'findById')
+      .mockResolvedValue(UserMockBuilder.aUser().build())
     jest.spyOn(cardsRepository, 'findById').mockResolvedValue(undefined)
 
     await expect(
@@ -75,12 +72,9 @@ describe('CreateCardReviewUseCase', () => {
 
     const saveSpy = jest.spyOn(cardsRepository, 'save')
 
-    jest.spyOn(usersRepository, 'findById').mockResolvedValue(
-      User.create({
-        email: 'email@email.com',
-        name: 'test user'
-      })
-    )
+    jest
+      .spyOn(usersRepository, 'findById')
+      .mockResolvedValue(UserMockBuilder.aUser().build())
     jest.spyOn(cardsRepository, 'findById').mockResolvedValue(
       Card.create({
         audioFileName: 'audio.mp3',
@@ -117,12 +111,9 @@ describe('CreateCardReviewUseCase', () => {
 
     const saveSpy = jest.spyOn(cardsRepository, 'save')
 
-    jest.spyOn(usersRepository, 'findById').mockResolvedValue(
-      User.create({
-        email: 'email@email.com',
-        name: 'test user'
-      })
-    )
+    jest
+      .spyOn(usersRepository, 'findById')
+      .mockResolvedValue(UserMockBuilder.aUser().build())
     jest.spyOn(cardsRepository, 'findById').mockResolvedValue(
       Card.create({
         audioFileName: 'audio.mp3',

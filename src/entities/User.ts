@@ -1,6 +1,6 @@
 import { Entity } from './Entity'
 
-type UserProps = {
+export type UserProps = {
   name: string
   password?: string
   email: string

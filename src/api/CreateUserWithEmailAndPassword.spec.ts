@@ -1,4 +1,4 @@
-import { User } from '@entities/User'
+import { UserMockBuilder } from '@entities/mocks/UserMockBuilder'
 import { HashProvider } from '@providers/HashProvider/HashProvider.interface'
 import { HashProviderStub } from '@providers/HashProvider/HashProviderStub'
 import { UsersRepositoryStub } from '@repositories/stubs/UsersRepositoryStub'
@@ -23,16 +23,9 @@ describe('CreateUserWithEmailAndPassword', () => {
   it('should return 201 on success', async () => {
     const userId = '123123123'
 
-    jest.spyOn(useCase, 'execute').mockResolvedValue(
-      User.create(
-        {
-          name: 'Test User',
-          email: 'testuser@email.com',
-          password: '123456'
-        },
-        userId
-      )
-    )
+    jest
+      .spyOn(useCase, 'execute')
+      .mockResolvedValue(UserMockBuilder.aUser().withId(userId).build())
 
     const response = await controller.handle({
       body: {

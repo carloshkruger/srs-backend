@@ -1,5 +1,5 @@
 import { Deck } from '@entities/Deck'
-import { User } from '@entities/User'
+import { UserMockBuilder } from '@entities/mocks/UserMockBuilder'
 import { DecksRepository } from '@repositories/DecksRepository'
 import { DecksRepositoryStub } from '@repositories/stubs/DecksRepositoryStub'
 import { UsersRepositoryStub } from '@repositories/stubs/UsersRepositoryStub'
@@ -32,13 +32,9 @@ describe('CreateDeckUseCase', () => {
   })
 
   it('should throw if the chosen name is already created for this user', async () => {
-    jest.spyOn(usersRepository, 'findById').mockResolvedValue(
-      User.create({
-        name: 'Test User',
-        email: 'testuser@email.com',
-        password: '123456'
-      })
-    )
+    jest
+      .spyOn(usersRepository, 'findById')
+      .mockResolvedValue(UserMockBuilder.aUser().build())
 
     jest.spyOn(decksRepository, 'findByNameAndUserId').mockResolvedValue(
       Deck.create({
@@ -59,13 +55,9 @@ describe('CreateDeckUseCase', () => {
 
   it('should save a deck', async () => {
     const saveSpy = jest.spyOn(decksRepository, 'save')
-    jest.spyOn(usersRepository, 'findById').mockResolvedValue(
-      User.create({
-        name: 'Test User',
-        email: 'testuser@email.com',
-        password: '123456'
-      })
-    )
+    jest
+      .spyOn(usersRepository, 'findById')
+      .mockResolvedValue(UserMockBuilder.aUser().build())
     jest
       .spyOn(decksRepository, 'findByNameAndUserId')
       .mockResolvedValue(undefined)

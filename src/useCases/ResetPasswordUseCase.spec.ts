@@ -1,4 +1,4 @@
-import { User } from '@entities/User'
+import { UserMockBuilder } from '@entities/mocks/UserMockBuilder'
 import { UserToken } from '@entities/UserToken'
 import { HashProvider } from '@providers/HashProvider/HashProvider.interface'
 import { HashProviderStub } from '@providers/HashProvider/HashProviderStub'
@@ -118,12 +118,9 @@ describe('ResetPasswordUseCase', () => {
     userToken.isTokenExpired = () => false
 
     jest.spyOn(userTokensRepository, 'findByToken').mockResolvedValue(userToken)
-    jest.spyOn(usersRepository, 'findById').mockResolvedValue(
-      User.create({
-        email: 'email@test.com',
-        name: 'test user'
-      })
-    )
+    jest
+      .spyOn(usersRepository, 'findById')
+      .mockResolvedValue(UserMockBuilder.aUser().build())
 
     const newPassword = '123456'
 

@@ -1,3 +1,4 @@
+import { UserMockBuilder } from '@entities/mocks/UserMockBuilder'
 import { User } from '@entities/User'
 import { HashProvider } from '@providers/HashProvider/HashProvider.interface'
 import { HashProviderStub } from '@providers/HashProvider/HashProviderStub'
@@ -22,12 +23,7 @@ describe('CreateUserWithEmailAndPassword', () => {
 
   it('should not be possible to create an user with an e-mail already in use', async () => {
     const email = 'email_in_use@email.com'
-
-    const user = User.create({
-      email,
-      name: 'test user',
-      password: '123456'
-    })
+    const user = UserMockBuilder.aUser().withEmail(email).build()
 
     jest.spyOn(usersRepository, 'findByEmail').mockResolvedValue(user)
     const saveSpy = jest.spyOn(usersRepository, 'save')

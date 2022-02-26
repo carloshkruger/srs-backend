@@ -1,4 +1,4 @@
-import { User } from '@entities/User'
+import { UserMockBuilder } from '@entities/mocks/UserMockBuilder'
 import { UsersRepositoryStub } from '@repositories/stubs/UsersRepositoryStub'
 import { UsersRepository } from '@repositories/UsersRepository'
 import { DeleteUserUseCase } from './DeleteUserUseCase'
@@ -26,12 +26,9 @@ describe('DeleteUserUseCase', () => {
   })
 
   it('should delete the user', async () => {
-    jest.spyOn(usersRepository, 'findById').mockResolvedValue(
-      User.create({
-        name: 'user test',
-        email: 'usertest@email.com'
-      })
-    )
+    jest
+      .spyOn(usersRepository, 'findById')
+      .mockResolvedValue(UserMockBuilder.aUser().build())
     const deleteSpy = jest.spyOn(usersRepository, 'deleteById')
 
     await expect(

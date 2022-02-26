@@ -13,7 +13,8 @@ module.exports = {
     '!src/api/Controller.ts',
     '!src/infra/**',
     '!src/index.ts',
-    '!src/entities/Entity.ts'
+    '!src/entities/Entity.ts',
+    '!src/**/mocks/**'
   ],
   coverageDirectory: 'coverage',
   coverageReporters: ['text-summary', 'lcov'],

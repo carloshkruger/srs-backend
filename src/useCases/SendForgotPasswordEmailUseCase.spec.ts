@@ -1,4 +1,4 @@
-import { User } from '@entities/User'
+import { UserMockBuilder } from '@entities/mocks/UserMockBuilder'
 import { MailProvider } from '@providers/MailProvider/MailProvider'
 import { MailProviderStub } from '@providers/MailProvider/MailProviderStub'
 import { UsersRepositoryStub } from '@repositories/stubs/UsersRepositoryStub'
@@ -46,12 +46,9 @@ describe('SendForgotPasswordEmailUseCase', () => {
     const saveSpy = jest.spyOn(userTokensRepository, 'save')
     const sendMailSpy = jest.spyOn(mailProvider, 'sendMail')
 
-    jest.spyOn(usersRepository, 'findByEmail').mockResolvedValue(
-      User.create({
-        email: 'testemail@email.com',
-        name: 'test user'
-      })
-    )
+    jest
+      .spyOn(usersRepository, 'findByEmail')
+      .mockResolvedValue(UserMockBuilder.aUser().build())
 
     await expect(
       useCase.execute({

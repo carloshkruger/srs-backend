@@ -1,4 +1,4 @@
-import { User } from '@entities/User'
+import { UserMockBuilder } from '@entities/mocks/UserMockBuilder'
 import { UsersRepositoryStub } from '@repositories/stubs/UsersRepositoryStub'
 import { UsersRepository } from '@repositories/UsersRepository'
 import { EmailAlreadyRegistered, UserNotFound } from './errors'
@@ -31,24 +31,12 @@ describe('UpdateUser', () => {
     const userId = '123'
     const secondUserId = '1234'
 
-    jest.spyOn(usersRepository, 'findById').mockResolvedValue(
-      User.create(
-        {
-          name: 'user test',
-          email: 'usertest@email.com'
-        },
-        userId
-      )
-    )
-    jest.spyOn(usersRepository, 'findByEmail').mockResolvedValue(
-      User.create(
-        {
-          name: 'user test',
-          email: 'usertest@email.com'
-        },
-        secondUserId
-      )
-    )
+    jest
+      .spyOn(usersRepository, 'findById')
+      .mockResolvedValue(UserMockBuilder.aUser().withId(userId).build())
+    jest
+      .spyOn(usersRepository, 'findByEmail')
+      .mockResolvedValue(UserMockBuilder.aUser().withId(secondUserId).build())
     const saveSpy = jest.spyOn(usersRepository, 'save')
 
     await expect(
@@ -64,24 +52,12 @@ describe('UpdateUser', () => {
   it('should not throw an error if the new email is already in use by this user', async () => {
     const userId = '123'
 
-    jest.spyOn(usersRepository, 'findById').mockResolvedValue(
-      User.create(
-        {
-          name: 'user test',
-          email: 'usertest@email.com'
-        },
-        userId
-      )
-    )
-    jest.spyOn(usersRepository, 'findByEmail').mockResolvedValue(
-      User.create(
-        {
-          name: 'user test',
-          email: 'usertest@email.com'
-        },
-        userId
-      )
-    )
+    jest
+      .spyOn(usersRepository, 'findById')
+      .mockResolvedValue(UserMockBuilder.aUser().withId(userId).build())
+    jest
+      .spyOn(usersRepository, 'findByEmail')
+      .mockResolvedValue(UserMockBuilder.aUser().withId(userId).build())
     const saveSpy = jest.spyOn(usersRepository, 'save')
 
     await expect(
