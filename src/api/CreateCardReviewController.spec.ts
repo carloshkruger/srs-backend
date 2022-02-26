@@ -28,8 +28,12 @@ describe('CreateCardReviewController', () => {
     controller = new CreateCardReviewController(useCase)
   })
 
-  it('should return 204 on success', async () => {
-    jest.spyOn(useCase, 'execute').mockResolvedValue(undefined)
+  it('should return 201 on success', async () => {
+    const nextReviewDate = new Date()
+
+    jest.spyOn(useCase, 'execute').mockResolvedValue({
+      nextReviewDate
+    })
 
     const response = await controller.handle({
       body: {
@@ -43,7 +47,7 @@ describe('CreateCardReviewController', () => {
       }
     } as unknown as Request)
 
-    expect(response.statusCode).toBe(204)
-    expect(response.body).toBeUndefined()
+    expect(response.statusCode).toBe(201)
+    expect(response.body.nextReviewDate).toEqual(nextReviewDate)
   })
 })

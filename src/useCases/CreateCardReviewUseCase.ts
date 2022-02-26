@@ -16,14 +16,22 @@ interface Request {
   difficultyLevel: CardReviewDifficultyLevel
 }
 
-export class CreateCardReviewUseCase implements UseCase<Request, void> {
+interface Response {
+  nextReviewDate: Date
+}
+
+export class CreateCardReviewUseCase implements UseCase<Request, Response> {
   constructor(
     private readonly usersRepository: UsersRepository,
     private readonly cardsRepository: CardsRepository,
     private readonly decksRepository: DecksRepository
   ) {}
 
-  async execute({ userId, cardId, difficultyLevel }: Request): Promise<void> {
+  async execute({
+    userId,
+    cardId,
+    difficultyLevel
+  }: Request): Promise<Response> {
     const user = await this.usersRepository.findById(userId)
 
     if (!user) {
@@ -52,5 +60,9 @@ export class CreateCardReviewUseCase implements UseCase<Request, void> {
     card.calculateAndUpdateNextReviewDate()
 
     await this.cardsRepository.save(card)
+
+    return {
+      nextReviewDate: card.nextReviewAt
+    }
   }
 }

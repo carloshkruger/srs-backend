@@ -12,12 +12,14 @@ export class CreateCardReviewController extends Controller {
     const cardId = request.params.id
     const userId = request.user.id
 
-    await this.useCase.execute({
+    const { nextReviewDate } = await this.useCase.execute({
       userId,
       cardId,
       difficultyLevel
     })
 
-    return super.noContent()
+    return super.created({
+      nextReviewDate
+    })
   }
 }

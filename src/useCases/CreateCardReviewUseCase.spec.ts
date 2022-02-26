@@ -149,7 +149,9 @@ describe('CreateCardReviewUseCase', () => {
         difficultyLevel: CardReviewDifficultyLevel.EASY,
         userId
       })
-    ).resolves.toBeUndefined()
+    ).resolves.toMatchObject({
+      nextReviewDate: expect.any(Date)
+    })
 
     const cardPassedToSaveMethod = saveSpy.mock.calls[0][0]
 
