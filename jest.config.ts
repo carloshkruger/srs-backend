@@ -7,6 +7,7 @@ module.exports = {
   collectCoverage: true,
   collectCoverageFrom: [
     'src/**/*.ts',
+    '!src/@types/**',
     '!src/**/index.ts',
     '!src/**/*Stub.ts',
     '!src/api/Controller.ts',
