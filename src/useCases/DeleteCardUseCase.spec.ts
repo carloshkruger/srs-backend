@@ -1,5 +1,5 @@
-import { Card } from '@entities/Card'
 import { Deck } from '@entities/Deck'
+import { CardMockBuilder } from '@entities/mocks/CardMockBuilder'
 import { StorageProvider } from '@providers/StorageProvider/StorageProvider.interface'
 import { StorageProviderStub } from '@providers/StorageProvider/StorageProviderStub'
 import { CardsRepository } from '@repositories/CardsRepository'
@@ -48,15 +48,9 @@ describe('DeleteCardUseCase', () => {
     const deleteByIdSpy = jest.spyOn(cardsRepository, 'deleteById')
     const deleteFolderSpy = jest.spyOn(storageProvider, 'deleteFolder')
 
-    jest.spyOn(cardsRepository, 'findById').mockResolvedValue(
-      Card.create({
-        deckId,
-        audioFileName: 'audio.mp3',
-        originalText: 'original text',
-        translatedText: 'translated text',
-        cardReviews: []
-      })
-    )
+    jest
+      .spyOn(cardsRepository, 'findById')
+      .mockResolvedValue(CardMockBuilder.aCard().withDeckId(deckId).build())
 
     jest.spyOn(decksRepository, 'findById').mockResolvedValue(
       Deck.create(
@@ -85,15 +79,9 @@ describe('DeleteCardUseCase', () => {
     const deleteByIdSpy = jest.spyOn(cardsRepository, 'deleteById')
     const deleteFolderSpy = jest.spyOn(storageProvider, 'deleteFolder')
 
-    jest.spyOn(cardsRepository, 'findById').mockResolvedValue(
-      Card.create({
-        deckId,
-        audioFileName: 'audio.mp3',
-        originalText: 'original text',
-        translatedText: 'translated text',
-        cardReviews: []
-      })
-    )
+    jest
+      .spyOn(cardsRepository, 'findById')
+      .mockResolvedValue(CardMockBuilder.aCard().withDeckId(deckId).build())
     jest.spyOn(decksRepository, 'findById').mockResolvedValue(
       Deck.create(
         {

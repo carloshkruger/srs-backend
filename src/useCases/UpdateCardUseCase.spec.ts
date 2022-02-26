@@ -1,5 +1,5 @@
-import { Card } from '@entities/Card'
 import { Deck } from '@entities/Deck'
+import { CardMockBuilder } from '@entities/mocks/CardMockBuilder'
 import { StorageProvider } from '@providers/StorageProvider/StorageProvider.interface'
 import { StorageProviderStub } from '@providers/StorageProvider/StorageProviderStub'
 import { TextToSpeechProvider } from '@providers/TextToSpeechProvider/TextToSpeechProvider.interface'
@@ -60,18 +60,11 @@ describe('UpdateCardUseCase', () => {
       .spyOn(cardsRepository, 'findByDeckIdAndOriginalText')
       .mockResolvedValue(undefined)
 
-    jest.spyOn(cardsRepository, 'findById').mockResolvedValue(
-      Card.create(
-        {
-          deckId,
-          audioFileName: 'audio.mp3',
-          originalText: 'original text',
-          translatedText: 'translated text',
-          cardReviews: []
-        },
-        '123456'
+    jest
+      .spyOn(cardsRepository, 'findById')
+      .mockResolvedValue(
+        CardMockBuilder.aCard().withId('123456').withDeckId(deckId).build()
       )
-    )
 
     jest.spyOn(decksRepository, 'findById').mockResolvedValue(
       Deck.create(
@@ -100,18 +93,15 @@ describe('UpdateCardUseCase', () => {
     const deckId = '123456'
     const originalText = 'original text'
 
-    jest.spyOn(cardsRepository, 'findById').mockResolvedValue(
-      Card.create(
-        {
-          deckId,
-          audioFileName: 'audio.mp3',
-          originalText,
-          translatedText: 'translated text',
-          cardReviews: []
-        },
-        '123456'
+    jest
+      .spyOn(cardsRepository, 'findById')
+      .mockResolvedValue(
+        CardMockBuilder.aCard()
+          .withId('123456')
+          .withDeckId(deckId)
+          .withOriginalText(originalText)
+          .build()
       )
-    )
     jest.spyOn(decksRepository, 'findById').mockResolvedValue(
       Deck.create(
         {
@@ -125,13 +115,10 @@ describe('UpdateCardUseCase', () => {
     jest
       .spyOn(cardsRepository, 'findByDeckIdAndOriginalText')
       .mockResolvedValue(
-        Card.create({
-          deckId,
-          audioFileName: '',
-          originalText,
-          translatedText: 'translated text',
-          cardReviews: []
-        })
+        CardMockBuilder.aCard()
+          .withDeckId(deckId)
+          .withOriginalText(originalText)
+          .build()
       )
 
     await expect(
@@ -162,18 +149,16 @@ describe('UpdateCardUseCase', () => {
     jest
       .spyOn(cardsRepository, 'findByDeckIdAndOriginalText')
       .mockResolvedValue(undefined)
-    jest.spyOn(cardsRepository, 'findById').mockResolvedValue(
-      Card.create(
-        {
-          deckId,
-          audioFileName,
-          originalText: oldOriginalText,
-          translatedText: 'translated text',
-          cardReviews: []
-        },
-        cardId
+    jest
+      .spyOn(cardsRepository, 'findById')
+      .mockResolvedValue(
+        CardMockBuilder.aCard()
+          .withId(cardId)
+          .withDeckId(deckId)
+          .withAudioFileName(audioFileName)
+          .withOriginalText(oldOriginalText)
+          .build()
       )
-    )
     jest.spyOn(decksRepository, 'findById').mockResolvedValue(
       Deck.create(
         {
@@ -231,18 +216,16 @@ describe('UpdateCardUseCase', () => {
     jest
       .spyOn(cardsRepository, 'findByDeckIdAndOriginalText')
       .mockResolvedValue(undefined)
-    jest.spyOn(cardsRepository, 'findById').mockResolvedValue(
-      Card.create(
-        {
-          deckId,
-          audioFileName,
-          originalText: oldOriginalText,
-          translatedText: 'translated text',
-          cardReviews: []
-        },
-        cardId
+    jest
+      .spyOn(cardsRepository, 'findById')
+      .mockResolvedValue(
+        CardMockBuilder.aCard()
+          .withId(cardId)
+          .withDeckId(deckId)
+          .withAudioFileName(audioFileName)
+          .withOriginalText(oldOriginalText)
+          .build()
       )
-    )
     jest.spyOn(decksRepository, 'findById').mockResolvedValue(
       Deck.create(
         {
@@ -294,18 +277,15 @@ describe('UpdateCardUseCase', () => {
     jest
       .spyOn(cardsRepository, 'findByDeckIdAndOriginalText')
       .mockResolvedValue(undefined)
-    jest.spyOn(cardsRepository, 'findById').mockResolvedValue(
-      Card.create(
-        {
-          deckId,
-          audioFileName: 'audio.mp3',
-          originalText,
-          translatedText: 'translated text',
-          cardReviews: []
-        },
-        '123456'
+    jest
+      .spyOn(cardsRepository, 'findById')
+      .mockResolvedValue(
+        CardMockBuilder.aCard()
+          .withId('123456')
+          .withDeckId(deckId)
+          .withOriginalText(originalText)
+          .build()
       )
-    )
     jest.spyOn(decksRepository, 'findById').mockResolvedValue(
       Deck.create(
         {

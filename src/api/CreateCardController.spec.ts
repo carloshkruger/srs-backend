@@ -1,4 +1,4 @@
-import { Card } from '@entities/Card'
+import { CardMockBuilder } from '@entities/mocks/CardMockBuilder'
 import { StorageProvider } from '@providers/StorageProvider/StorageProvider.interface'
 import { StorageProviderStub } from '@providers/StorageProvider/StorageProviderStub'
 import { TextToSpeechProvider } from '@providers/TextToSpeechProvider/TextToSpeechProvider.interface'
@@ -34,15 +34,19 @@ describe('CreateCardController', () => {
   })
 
   it('should return 201 on success', async () => {
-    jest.spyOn(useCase, 'execute').mockResolvedValue(
-      Card.create({
-        deckId: '123456',
-        audioFileName: '',
-        originalText: 'original text',
-        translatedText: 'translated text',
-        cardReviews: []
-      })
-    )
+    const deckId = '123456'
+    const originalText = 'original text'
+    const translatedText = 'translated text'
+
+    jest
+      .spyOn(useCase, 'execute')
+      .mockResolvedValue(
+        CardMockBuilder.aCard()
+          .withDeckId(deckId)
+          .withOriginalText(originalText)
+          .withTranslatedText(translatedText)
+          .build()
+      )
 
     const response = await controller.handle({
       body: {
@@ -58,9 +62,9 @@ describe('CreateCardController', () => {
     expect(response.statusCode).toBe(201)
     expect(response.body).toMatchObject({
       id: expect.any(String),
-      deckId: '123456',
-      originalText: 'original text',
-      translatedText: 'translated text'
+      deckId,
+      originalText,
+      translatedText
     })
   })
 })

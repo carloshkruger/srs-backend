@@ -2,7 +2,7 @@ import { Sm2Algorithm } from '@shared/Sm2Algorithm'
 import { CardReview } from './CardReview'
 import { Entity } from './Entity'
 
-type CardProps = {
+export type CardProps = {
   deckId: string
   originalText: string
   translatedText: string

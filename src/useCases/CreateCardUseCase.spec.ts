@@ -1,5 +1,6 @@
 import { Card } from '@entities/Card'
 import { Deck } from '@entities/Deck'
+import { CardMockBuilder } from '@entities/mocks/CardMockBuilder'
 import { StorageProvider } from '@providers/StorageProvider/StorageProvider.interface'
 import { StorageProviderStub } from '@providers/StorageProvider/StorageProviderStub'
 import { TextToSpeechProvider } from '@providers/TextToSpeechProvider/TextToSpeechProvider.interface'
@@ -72,13 +73,10 @@ describe('CreateCardUseCase', () => {
     jest
       .spyOn(cardsRepository, 'findByDeckIdAndOriginalText')
       .mockResolvedValue(
-        Card.create({
-          deckId,
-          audioFileName: '',
-          originalText,
-          translatedText: 'translated text',
-          cardReviews: []
-        })
+        CardMockBuilder.aCard()
+          .withDeckId(deckId)
+          .withOriginalText(originalText)
+          .build()
       )
 
     await expect(

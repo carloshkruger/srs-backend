@@ -1,4 +1,3 @@
-import { Card } from '@entities/Card'
 import { CardReviewDifficultyLevel } from '@entities/enums/CardReviewDifficultyLevel'
 import { Deck } from '@entities/Deck'
 import { CardsRepository } from '@repositories/CardsRepository'
@@ -14,6 +13,7 @@ import {
   UserNotFound
 } from './errors'
 import { UserMockBuilder } from '@entities/mocks/UserMockBuilder'
+import { CardMockBuilder } from '@entities/mocks/CardMockBuilder'
 
 describe('CreateCardReviewUseCase', () => {
   let createCardReviewUseCase: CreateCardReviewUseCase
@@ -75,15 +75,9 @@ describe('CreateCardReviewUseCase', () => {
     jest
       .spyOn(usersRepository, 'findById')
       .mockResolvedValue(UserMockBuilder.aUser().build())
-    jest.spyOn(cardsRepository, 'findById').mockResolvedValue(
-      Card.create({
-        audioFileName: 'audio.mp3',
-        cardReviews: [],
-        deckId,
-        originalText: 'original text',
-        translatedText: 'translated text'
-      })
-    )
+    jest
+      .spyOn(cardsRepository, 'findById')
+      .mockResolvedValue(CardMockBuilder.aCard().withDeckId(deckId).build())
     jest.spyOn(decksRepository, 'findById').mockResolvedValue(
       Deck.create(
         {
@@ -114,15 +108,9 @@ describe('CreateCardReviewUseCase', () => {
     jest
       .spyOn(usersRepository, 'findById')
       .mockResolvedValue(UserMockBuilder.aUser().build())
-    jest.spyOn(cardsRepository, 'findById').mockResolvedValue(
-      Card.create({
-        audioFileName: 'audio.mp3',
-        cardReviews: [],
-        deckId,
-        originalText: 'original text',
-        translatedText: 'translated text'
-      })
-    )
+    jest
+      .spyOn(cardsRepository, 'findById')
+      .mockResolvedValue(CardMockBuilder.aCard().withDeckId(deckId).build())
     jest.spyOn(decksRepository, 'findById').mockResolvedValue(
       Deck.create(
         {
