@@ -55,19 +55,19 @@ export class Sm2Algorithm {
     repetition: number,
     easinessFactor: number
   ): number {
-    let nextInterval = 0
-
-    if (difficultyLevel >= 3) {
-      if (repetition === 0) {
-        nextInterval = 1
-      } else if (repetition === 1) {
-        nextInterval = 6
-      } else {
-        nextInterval = Math.round(repetition * easinessFactor)
-      }
+    if (difficultyLevel < 3) {
+      return 0
     }
 
-    return nextInterval
+    if (repetition === 0) {
+      return 1
+    }
+
+    if (repetition === 1) {
+      return 6
+    }
+
+    return Math.round(repetition * easinessFactor)
   }
 
   private static calculateNextRepetitionCount(
