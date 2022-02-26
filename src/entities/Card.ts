@@ -1,3 +1,5 @@
+import { Sm2Algorithm } from '@shared/Sm2Algorithm'
+import { CardReview } from './CardReview'
 import { Entity } from './Entity'
 
 type CardProps = {
@@ -5,6 +7,8 @@ type CardProps = {
   originalText: string
   translatedText: string
   audioFileName: string
+  cardReviews: CardReview[]
+  nextReviewAt?: Date
 }
 
 export class Card extends Entity<CardProps> {
@@ -22,6 +26,14 @@ export class Card extends Entity<CardProps> {
 
   public get audioFileName(): string {
     return this.props.audioFileName
+  }
+
+  public get cardReviews(): CardReview[] {
+    return this.props.cardReviews
+  }
+
+  public get nextReviewAt(): Date | undefined {
+    return this.props.nextReviewAt
   }
 
   private constructor(props: CardProps, id?: string) {
@@ -51,7 +63,26 @@ export class Card extends Entity<CardProps> {
     this.props.audioFileName = audioFileName
   }
 
+  public updateNextReviewAt(date: Date): void {
+    this.props.nextReviewAt = date
+  }
+
   public getFilePathToStorage(userId: string): string[] {
     return ['users', userId, 'decks', this.deckId, 'cards', this.id]
+  }
+
+  public addCardReview(cardReview: CardReview): void {
+    this.props.cardReviews.push(cardReview)
+  }
+
+  public calculateAndUpdateNextReviewDate(): void {
+    const { intervalInDays } = Sm2Algorithm.calculateNextReviewDate(
+      this.cardReviews
+    )
+
+    const nextReviewDate = new Date()
+    nextReviewDate.setDate(nextReviewDate.getDate() + intervalInDays)
+
+    this.updateNextReviewAt(nextReviewDate)
   }
 }

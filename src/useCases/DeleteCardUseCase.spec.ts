@@ -53,7 +53,8 @@ describe('DeleteCardUseCase', () => {
         deckId,
         audioFileName: 'audio.mp3',
         originalText: 'original text',
-        translatedText: 'translated text'
+        translatedText: 'translated text',
+        cardReviews: []
       })
     )
 
@@ -89,7 +90,8 @@ describe('DeleteCardUseCase', () => {
         deckId,
         audioFileName: 'audio.mp3',
         originalText: 'original text',
-        translatedText: 'translated text'
+        translatedText: 'translated text',
+        cardReviews: []
       })
     )
     jest.spyOn(decksRepository, 'findById').mockResolvedValue(

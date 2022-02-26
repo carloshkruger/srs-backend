@@ -63,7 +63,9 @@ export class CreateCardUseCase implements UseCase<Request, Card> {
       deckId,
       originalText,
       translatedText,
-      audioFileName
+      audioFileName,
+      cardReviews: [],
+      nextReviewAt: new Date()
     })
 
     const audioBuffer = await this.textToSpeechProvider.createAudio(

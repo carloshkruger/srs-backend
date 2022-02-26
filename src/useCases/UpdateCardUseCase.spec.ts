@@ -66,7 +66,8 @@ describe('UpdateCardUseCase', () => {
           deckId,
           audioFileName: 'audio.mp3',
           originalText: 'original text',
-          translatedText: 'translated text'
+          translatedText: 'translated text',
+          cardReviews: []
         },
         '123456'
       )
@@ -105,7 +106,8 @@ describe('UpdateCardUseCase', () => {
           deckId,
           audioFileName: 'audio.mp3',
           originalText,
-          translatedText: 'translated text'
+          translatedText: 'translated text',
+          cardReviews: []
         },
         '123456'
       )
@@ -127,7 +129,8 @@ describe('UpdateCardUseCase', () => {
           deckId,
           audioFileName: '',
           originalText,
-          translatedText: 'translated text'
+          translatedText: 'translated text',
+          cardReviews: []
         })
       )
 
@@ -165,7 +168,8 @@ describe('UpdateCardUseCase', () => {
           deckId,
           audioFileName,
           originalText: oldOriginalText,
-          translatedText: 'translated text'
+          translatedText: 'translated text',
+          cardReviews: []
         },
         cardId
       )
@@ -233,7 +237,8 @@ describe('UpdateCardUseCase', () => {
           deckId,
           audioFileName,
           originalText: oldOriginalText,
-          translatedText: 'translated text'
+          translatedText: 'translated text',
+          cardReviews: []
         },
         cardId
       )
@@ -295,7 +300,8 @@ describe('UpdateCardUseCase', () => {
           deckId,
           audioFileName: 'audio.mp3',
           originalText,
-          translatedText: 'translated text'
+          translatedText: 'translated text',
+          cardReviews: []
         },
         '123456'
       )

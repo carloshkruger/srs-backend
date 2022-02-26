@@ -39,7 +39,8 @@ describe('CreateCardController', () => {
         deckId: '123456',
         audioFileName: '',
         originalText: 'original text',
-        translatedText: 'translated text'
+        translatedText: 'translated text',
+        cardReviews: []
       })
     )
 

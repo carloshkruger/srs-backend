@@ -76,7 +76,8 @@ describe('CreateCardUseCase', () => {
           deckId,
           audioFileName: '',
           originalText,
-          translatedText: 'translated text'
+          translatedText: 'translated text',
+          cardReviews: []
         })
       )
 
