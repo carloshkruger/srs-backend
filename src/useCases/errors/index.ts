@@ -8,6 +8,7 @@ import { CardNotFound } from './CardNotFound'
 import { CardDoesNotBelongToTheUser } from './CardDoesNotBelongToTheUser'
 import { TokenNotFound } from './TokenNotFound'
 import { TokenExpired } from './TokenExpired'
+import { IncorrectCredentials } from './IncorrectCredentials'
 
 export {
   UserNotFound,
@@ -19,5 +20,6 @@ export {
   CardNotFound,
   CardDoesNotBelongToTheUser,
   TokenNotFound,
-  TokenExpired
+  TokenExpired,
+  IncorrectCredentials
 }
