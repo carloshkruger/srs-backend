@@ -10,4 +10,12 @@ export interface CardsRepository {
   ): Promise<Card>
   countCardsCreatedTodayByUser(userId: string): Promise<number>
   deleteById(id: string): Promise<void>
+  countCardsReviewedTodayByUser(userId: string): Promise<number>
+  findCardsForReview(data: FindCardsForReviewParams): Promise<Card[]>
+}
+
+type FindCardsForReviewParams = {
+  userId: string
+  limit: number
+  deckId?: string
 }

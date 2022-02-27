@@ -20,4 +20,10 @@ export class CardsRepositoryStub implements CardsRepository {
   async findByDeckId(): Promise<Card[]> {
     return Promise.resolve([])
   }
+  async countCardsReviewedTodayByUser(): Promise<number> {
+    return Promise.resolve(0)
+  }
+  async findCardsForReview(): Promise<Card[]> {
+    return Promise.resolve([])
+  }
 }
