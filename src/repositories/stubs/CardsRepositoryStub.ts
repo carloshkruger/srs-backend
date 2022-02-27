@@ -17,4 +17,7 @@ export class CardsRepositoryStub implements CardsRepository {
   async deleteById(): Promise<void> {
     return Promise.resolve(undefined)
   }
+  async findByDeckId(): Promise<Card[]> {
+    return Promise.resolve([])
+  }
 }
