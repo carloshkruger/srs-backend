@@ -1,14 +1,21 @@
-import { Request } from 'express'
+import { Request, Response } from 'express'
 
 abstract class Controller {
-  public async execute(request: Request): Promise<ControllerResponse> {
-    try {
-      const response = await this.handle(request)
+  public async execute(
+    request: Request,
+    response: Response
+  ): Promise<ControllerResponse> {
+    let controllerResponse: ControllerResponse
 
-      return response
+    try {
+      controllerResponse = await this.handle(request)
     } catch (error) {
-      return this.fail(error)
+      controllerResponse = this.fail(error)
     }
+
+    return response
+      .status(controllerResponse.statusCode)
+      .json(controllerResponse.body)
   }
 
   protected abstract handle(request: Request): Promise<ControllerResponse>
