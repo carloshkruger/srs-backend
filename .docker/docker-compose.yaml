@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres
+    restart: always
+    ports:
+      - '5432:5432'
+    volumes:
+      - ./data/postgres:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: '123456'
+      POSTGRES_USER: postgres
+      POSTGRES_DB: srs_app
+    networks:
+      - srs-app-network
+
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: 'carloshkruger@gmail.com.br'
+      PGADMIN_DEFAULT_PASSWORD: '123456'
+    ports:
+      - '5433:80'
+    depends_on:
+      - postgres
+    networks:
+      - srs-app-network
+
+networks:
+  srs-app-network:
+    driver: bridge
