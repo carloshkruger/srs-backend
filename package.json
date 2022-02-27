@@ -9,8 +9,8 @@
     "lint": "eslint . --ext .ts",
     "lint:fix": "eslint . --ext .ts --fix",
     "prettier-format": "prettier --config .prettierrc 'src/**/*.ts' --write",
-    "test": "jest",
-    "test:cov": "jest --no-cache --coverage",
+    "test": "jest --runInBand",
+    "test:cov": "jest --no-cache --coverage --runInBand",
     "prepare": "husky install"
   },
   "repository": {
