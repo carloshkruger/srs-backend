@@ -1,5 +1,5 @@
-import { Deck } from '@entities/Deck'
 import { CardMockBuilder } from '@entities/mocks/CardMockBuilder'
+import { DeckMockBuilder } from '@entities/mocks/DeckMockBuilder'
 import { StorageProvider } from '@providers/StorageProvider/StorageProvider.interface'
 import { StorageProviderStub } from '@providers/StorageProvider/StorageProviderStub'
 import { TextToSpeechProvider } from '@providers/TextToSpeechProvider/TextToSpeechProvider.interface'
@@ -66,16 +66,11 @@ describe('UpdateCardUseCase', () => {
         CardMockBuilder.aCard().withId('123456').withDeckId(deckId).build()
       )
 
-    jest.spyOn(decksRepository, 'findById').mockResolvedValue(
-      Deck.create(
-        {
-          name: 'Deck name',
-          userId: ownerUserId,
-          description: 'Deck description'
-        },
-        deckId
+    jest
+      .spyOn(decksRepository, 'findById')
+      .mockResolvedValue(
+        DeckMockBuilder.aDeck().withId(deckId).withUserId(ownerUserId).build()
       )
-    )
 
     await expect(
       updateCardUseCase.execute({
@@ -102,16 +97,9 @@ describe('UpdateCardUseCase', () => {
           .withOriginalText(originalText)
           .build()
       )
-    jest.spyOn(decksRepository, 'findById').mockResolvedValue(
-      Deck.create(
-        {
-          name: 'Deck name',
-          userId: '123456',
-          description: 'Deck description'
-        },
-        deckId
-      )
-    )
+    jest
+      .spyOn(decksRepository, 'findById')
+      .mockResolvedValue(DeckMockBuilder.aDeck().withId(deckId).build())
     jest
       .spyOn(cardsRepository, 'findByDeckIdAndOriginalText')
       .mockResolvedValue(
@@ -159,16 +147,9 @@ describe('UpdateCardUseCase', () => {
           .withOriginalText(oldOriginalText)
           .build()
       )
-    jest.spyOn(decksRepository, 'findById').mockResolvedValue(
-      Deck.create(
-        {
-          name: 'Deck name',
-          userId: '123456',
-          description: 'Deck description'
-        },
-        deckId
-      )
-    )
+    jest
+      .spyOn(decksRepository, 'findById')
+      .mockResolvedValue(DeckMockBuilder.aDeck().withId(deckId).build())
 
     await expect(
       updateCardUseCase.execute({
@@ -226,16 +207,9 @@ describe('UpdateCardUseCase', () => {
           .withOriginalText(oldOriginalText)
           .build()
       )
-    jest.spyOn(decksRepository, 'findById').mockResolvedValue(
-      Deck.create(
-        {
-          name: 'Deck name',
-          userId: '123456',
-          description: 'Deck description'
-        },
-        deckId
-      )
-    )
+    jest
+      .spyOn(decksRepository, 'findById')
+      .mockResolvedValue(DeckMockBuilder.aDeck().withId(deckId).build())
 
     await expect(
       updateCardUseCase.execute({
@@ -286,16 +260,9 @@ describe('UpdateCardUseCase', () => {
           .withOriginalText(originalText)
           .build()
       )
-    jest.spyOn(decksRepository, 'findById').mockResolvedValue(
-      Deck.create(
-        {
-          name: 'Deck name',
-          userId: '123456',
-          description: 'Deck description'
-        },
-        deckId
-      )
-    )
+    jest
+      .spyOn(decksRepository, 'findById')
+      .mockResolvedValue(DeckMockBuilder.aDeck().withId(deckId).build())
 
     await expect(
       updateCardUseCase.execute({

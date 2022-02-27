@@ -1,6 +1,6 @@
 import { Card } from '@entities/Card'
-import { Deck } from '@entities/Deck'
 import { CardMockBuilder } from '@entities/mocks/CardMockBuilder'
+import { DeckMockBuilder } from '@entities/mocks/DeckMockBuilder'
 import { StorageProvider } from '@providers/StorageProvider/StorageProvider.interface'
 import { StorageProviderStub } from '@providers/StorageProvider/StorageProviderStub'
 import { TextToSpeechProvider } from '@providers/TextToSpeechProvider/TextToSpeechProvider.interface'
@@ -59,16 +59,9 @@ describe('CreateCardUseCase', () => {
     const deckId = '123456'
     const originalText = 'original text'
 
-    jest.spyOn(decksRepository, 'findById').mockResolvedValue(
-      Deck.create(
-        {
-          name: 'Deck name',
-          userId: '123456',
-          description: 'Deck description'
-        },
-        deckId
-      )
-    )
+    jest
+      .spyOn(decksRepository, 'findById')
+      .mockResolvedValue(DeckMockBuilder.aDeck().withId(deckId).build())
 
     jest
       .spyOn(cardsRepository, 'findByDeckIdAndOriginalText')
@@ -92,13 +85,9 @@ describe('CreateCardUseCase', () => {
 
   it('should throw if the maximum daily cards creation per user was reached', async () => {
     const saveSpy = jest.spyOn(cardsRepository, 'save')
-    jest.spyOn(decksRepository, 'findById').mockResolvedValue(
-      Deck.create({
-        name: 'Deck name',
-        userId: '123456',
-        description: 'Deck description'
-      })
-    )
+    jest
+      .spyOn(decksRepository, 'findById')
+      .mockResolvedValue(DeckMockBuilder.aDeck().build())
     jest
       .spyOn(cardsRepository, 'countCardsCreatedTodayByUser')
       .mockResolvedValue(MAXIMUM_DAILY_CARDS_CREATION_PER_USER)
@@ -121,13 +110,9 @@ describe('CreateCardUseCase', () => {
       .mockResolvedValue(audioBufferMock)
     const saveFileSpy = jest.spyOn(storageProvider, 'saveFileFromBuffer')
     const saveSpy = jest.spyOn(cardsRepository, 'save')
-    jest.spyOn(decksRepository, 'findById').mockResolvedValue(
-      Deck.create({
-        name: 'Deck name',
-        userId: '123456',
-        description: 'Deck description'
-      })
-    )
+    jest
+      .spyOn(decksRepository, 'findById')
+      .mockResolvedValue(DeckMockBuilder.aDeck().build())
 
     await expect(
       createCardUseCase.execute({
@@ -157,13 +142,9 @@ describe('CreateCardUseCase', () => {
     const error = new Error('test error')
     const deleteFileSpy = jest.spyOn(storageProvider, 'deleteFile')
     const saveSpy = jest.spyOn(cardsRepository, 'save').mockRejectedValue(error)
-    jest.spyOn(decksRepository, 'findById').mockResolvedValue(
-      Deck.create({
-        name: 'Deck name',
-        userId: '123456',
-        description: 'Deck description'
-      })
-    )
+    jest
+      .spyOn(decksRepository, 'findById')
+      .mockResolvedValue(DeckMockBuilder.aDeck().build())
 
     await expect(
       createCardUseCase.execute({

@@ -1,6 +1,6 @@
 import { Entity } from './Entity'
 
-type DeckProps = {
+export type DeckProps = {
   userId: string
   name: string
   description?: string

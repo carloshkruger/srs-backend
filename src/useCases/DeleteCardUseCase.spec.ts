@@ -1,5 +1,5 @@
-import { Deck } from '@entities/Deck'
 import { CardMockBuilder } from '@entities/mocks/CardMockBuilder'
+import { DeckMockBuilder } from '@entities/mocks/DeckMockBuilder'
 import { StorageProvider } from '@providers/StorageProvider/StorageProvider.interface'
 import { StorageProviderStub } from '@providers/StorageProvider/StorageProviderStub'
 import { CardsRepository } from '@repositories/CardsRepository'
@@ -52,16 +52,11 @@ describe('DeleteCardUseCase', () => {
       .spyOn(cardsRepository, 'findById')
       .mockResolvedValue(CardMockBuilder.aCard().withDeckId(deckId).build())
 
-    jest.spyOn(decksRepository, 'findById').mockResolvedValue(
-      Deck.create(
-        {
-          name: 'Deck name',
-          userId: ownerUserId,
-          description: 'Deck description'
-        },
-        deckId
+    jest
+      .spyOn(decksRepository, 'findById')
+      .mockResolvedValue(
+        DeckMockBuilder.aDeck().withId(deckId).withUserId(ownerUserId).build()
       )
-    )
 
     await expect(
       deleteCardUseCase.execute({
@@ -82,16 +77,9 @@ describe('DeleteCardUseCase', () => {
     jest
       .spyOn(cardsRepository, 'findById')
       .mockResolvedValue(CardMockBuilder.aCard().withDeckId(deckId).build())
-    jest.spyOn(decksRepository, 'findById').mockResolvedValue(
-      Deck.create(
-        {
-          name: 'deck name',
-          userId: '123456',
-          description: 'deck description'
-        },
-        deckId
-      )
-    )
+    jest
+      .spyOn(decksRepository, 'findById')
+      .mockResolvedValue(DeckMockBuilder.aDeck().withId(deckId).build())
 
     const cardId = '12345'
 

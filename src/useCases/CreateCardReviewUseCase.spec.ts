@@ -1,5 +1,4 @@
 import { CardReviewDifficultyLevel } from '@entities/enums/CardReviewDifficultyLevel'
-import { Deck } from '@entities/Deck'
 import { CardsRepository } from '@repositories/CardsRepository'
 import { DecksRepository } from '@repositories/DecksRepository'
 import { CardsRepositoryStub } from '@repositories/stubs/CardsRepositoryStub'
@@ -14,6 +13,7 @@ import {
 } from './errors'
 import { UserMockBuilder } from '@entities/mocks/UserMockBuilder'
 import { CardMockBuilder } from '@entities/mocks/CardMockBuilder'
+import { DeckMockBuilder } from '@entities/mocks/DeckMockBuilder'
 
 describe('CreateCardReviewUseCase', () => {
   let createCardReviewUseCase: CreateCardReviewUseCase
@@ -78,16 +78,11 @@ describe('CreateCardReviewUseCase', () => {
     jest
       .spyOn(cardsRepository, 'findById')
       .mockResolvedValue(CardMockBuilder.aCard().withDeckId(deckId).build())
-    jest.spyOn(decksRepository, 'findById').mockResolvedValue(
-      Deck.create(
-        {
-          name: 'deck name',
-          userId,
-          description: 'description test'
-        },
-        deckId
+    jest
+      .spyOn(decksRepository, 'findById')
+      .mockResolvedValue(
+        DeckMockBuilder.aDeck().withId(deckId).withUserId(userId).build()
       )
-    )
 
     await expect(
       createCardReviewUseCase.execute({
@@ -111,16 +106,11 @@ describe('CreateCardReviewUseCase', () => {
     jest
       .spyOn(cardsRepository, 'findById')
       .mockResolvedValue(CardMockBuilder.aCard().withDeckId(deckId).build())
-    jest.spyOn(decksRepository, 'findById').mockResolvedValue(
-      Deck.create(
-        {
-          name: 'deck name',
-          userId,
-          description: 'description test'
-        },
-        deckId
+    jest
+      .spyOn(decksRepository, 'findById')
+      .mockResolvedValue(
+        DeckMockBuilder.aDeck().withId(deckId).withUserId(userId).build()
       )
-    )
 
     await expect(
       createCardReviewUseCase.execute({

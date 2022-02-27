@@ -1,4 +1,4 @@
-import { Deck } from '@entities/Deck'
+import { DeckMockBuilder } from '@entities/mocks/DeckMockBuilder'
 import { DecksRepository } from '@repositories/DecksRepository'
 import { DecksRepositoryStub } from '@repositories/stubs/DecksRepositoryStub'
 import { UsersRepositoryStub } from '@repositories/stubs/UsersRepositoryStub'
@@ -21,13 +21,17 @@ describe('CreateDeckController', () => {
   })
 
   it('should return 201 on success', async () => {
-    jest.spyOn(useCase, 'execute').mockResolvedValue(
-      Deck.create({
-        userId: '123456',
-        name: 'Deck name',
-        description: 'Deck description'
-      })
-    )
+    const name = 'Deck name'
+    const description = 'Deck description'
+
+    jest
+      .spyOn(useCase, 'execute')
+      .mockResolvedValue(
+        DeckMockBuilder.aDeck()
+          .withName(name)
+          .withDescription(description)
+          .build()
+      )
 
     const response = await controller.handle({
       body: {
@@ -42,8 +46,8 @@ describe('CreateDeckController', () => {
     expect(response.statusCode).toBe(201)
     expect(response.body).toMatchObject({
       id: expect.any(String),
-      name: 'Deck name',
-      description: 'Deck description'
+      name,
+      description
     })
   })
 })

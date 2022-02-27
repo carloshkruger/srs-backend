@@ -1,4 +1,4 @@
-import { Deck } from '@entities/Deck'
+import { DeckMockBuilder } from '@entities/mocks/DeckMockBuilder'
 import { UserMockBuilder } from '@entities/mocks/UserMockBuilder'
 import { DecksRepository } from '@repositories/DecksRepository'
 import { DecksRepositoryStub } from '@repositories/stubs/DecksRepositoryStub'
@@ -56,13 +56,9 @@ describe('UpdateDeckUseCase', () => {
     jest
       .spyOn(usersRepository, 'findById')
       .mockResolvedValue(UserMockBuilder.aUser().build())
-    jest.spyOn(decksRepository, 'findById').mockResolvedValue(
-      Deck.create({
-        userId: '123456',
-        name: 'Deck name',
-        description: 'Deck description'
-      })
-    )
+    jest
+      .spyOn(decksRepository, 'findById')
+      .mockResolvedValue(DeckMockBuilder.aDeck().build())
 
     await expect(
       updateDeckUseCase.execute({
@@ -82,27 +78,17 @@ describe('UpdateDeckUseCase', () => {
       .spyOn(usersRepository, 'findById')
       .mockResolvedValue(UserMockBuilder.aUser().build())
 
-    jest.spyOn(decksRepository, 'findById').mockResolvedValue(
-      Deck.create(
-        {
-          userId: '123456',
-          name: 'Deck name',
-          description: 'Deck description'
-        },
-        idFromDeckThatIsBeenUpdated
+    jest
+      .spyOn(decksRepository, 'findById')
+      .mockResolvedValue(
+        DeckMockBuilder.aDeck().withId(idFromDeckThatIsBeenUpdated).build()
       )
-    )
 
-    jest.spyOn(decksRepository, 'findByNameAndUserId').mockResolvedValue(
-      Deck.create(
-        {
-          userId: '123456',
-          name: 'Deck name',
-          description: 'Deck description'
-        },
-        idFromAnotherDeckWithTheSameName
+    jest
+      .spyOn(decksRepository, 'findByNameAndUserId')
+      .mockResolvedValue(
+        DeckMockBuilder.aDeck().withId(idFromAnotherDeckWithTheSameName).build()
       )
-    )
 
     await expect(
       updateDeckUseCase.execute({
@@ -120,13 +106,9 @@ describe('UpdateDeckUseCase', () => {
       .spyOn(usersRepository, 'findById')
       .mockResolvedValue(UserMockBuilder.aUser().build())
 
-    jest.spyOn(decksRepository, 'findById').mockResolvedValue(
-      Deck.create({
-        userId: '123456',
-        name: 'Deck name',
-        description: 'Deck description'
-      })
-    )
+    jest
+      .spyOn(decksRepository, 'findById')
+      .mockResolvedValue(DeckMockBuilder.aDeck().build())
 
     jest
       .spyOn(decksRepository, 'findByNameAndUserId')
