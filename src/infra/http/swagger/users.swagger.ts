@@ -57,7 +57,7 @@ export default {
       }
     }
   },
-  '/users/:id': {
+  '/users/{id}': {
     put: {
       security: [{ bearerAuth: [] }],
       tags: ['Users'],
@@ -102,7 +102,7 @@ export default {
       }
     }
   },
-  '/users/:id/password': {
+  '/users/{id}/password': {
     put: {
       security: [{ bearerAuth: [] }],
       tags: ['Users'],

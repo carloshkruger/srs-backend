@@ -151,7 +151,7 @@ export default {
       }
     }
   },
-  '/decks/:id/cards': {
+  '/decks/{id}/cards': {
     get: {
       security: [{ bearerAuth: [] }],
       tags: ['Decks'],

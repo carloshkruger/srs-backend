@@ -7,7 +7,7 @@ import forgotPasswordSwagger from './forgotPassword.swagger'
 export default {
   openapi: '3.0.0',
   info: {
-    title: 'API - Speced Repetition System',
+    title: 'API - Spaced Repetition System',
     description: '',
     version: '1.0.0'
   },

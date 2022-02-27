@@ -67,7 +67,7 @@ export default {
       }
     }
   },
-  '/cards/:id': {
+  '/cards/{id}': {
     put: {
       security: [{ bearerAuth: [] }],
       tags: ['Cards'],
@@ -116,7 +116,7 @@ export default {
       }
     }
   },
-  '/cards/:id/review': {
+  '/cards/{id}/review': {
     post: {
       security: [{ bearerAuth: [] }],
       tags: ['Cards'],
