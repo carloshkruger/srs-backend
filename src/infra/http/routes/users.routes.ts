@@ -9,7 +9,9 @@ import { CreateUserWithEmailAndPassword } from '@useCases/CreateUserWithEmailAnd
 import { DeleteUserUseCase } from '@useCases/DeleteUserUseCase'
 import { UpdatePasswordUseCase } from '@useCases/UpdatePasswordUseCase'
 import { UpdateUser } from '@useCases/UpdateUser'
+import { celebrate, Segments } from 'celebrate'
 import { Router } from 'express'
+import Joi from 'joi'
 
 const usersRoutes = Router()
 
@@ -41,22 +43,54 @@ const updatePasswordController = new UpdatePasswordController(
   updatePasswordUseCase
 )
 
+const passwordValidation = Joi.string().min(6).required()
+
 usersRoutes.post(
   '/users/',
+  celebrate({
+    [Segments.BODY]: {
+      name: Joi.string().required(),
+      email: Joi.string().email().required(),
+      password: passwordValidation
+    }
+  }),
   createUserWithEmailAndPasswordController.execute.bind(
     createUserWithEmailAndPasswordController
   )
 )
 usersRoutes.put(
   '/users/:id',
+  celebrate({
+    [Segments.BODY]: {
+      name: Joi.string().required(),
+      email: Joi.string().email().required()
+    },
+    [Segments.PARAMS]: {
+      id: Joi.string().uuid().required()
+    }
+  }),
   updateUserController.execute.bind(updateUserController)
 )
 usersRoutes.delete(
   '/users/:id',
+  celebrate({
+    [Segments.PARAMS]: {
+      id: Joi.string().uuid().required()
+    }
+  }),
   deleteUserController.execute.bind(deleteUserController)
 )
 usersRoutes.put(
   '/users/:id/password',
+  celebrate({
+    [Segments.BODY]: {
+      currentPassword: passwordValidation,
+      newPassword: passwordValidation
+    },
+    [Segments.PARAMS]: {
+      id: Joi.string().uuid().required()
+    }
+  }),
   updatePasswordController.execute.bind(updatePasswordController)
 )
 

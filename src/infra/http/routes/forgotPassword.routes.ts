@@ -6,7 +6,9 @@ import { PrismaUsersRepository } from '@repositories/prisma/PrismaUsersRepositor
 import { PrismaUserTokensRepository } from '@repositories/prisma/PrismaUserTokensRepository'
 import { ResetPasswordUseCase } from '@useCases/ResetPasswordUseCase'
 import { SendForgotPasswordEmailUseCase } from '@useCases/SendForgotPasswordEmailUseCase'
+import { celebrate, Segments } from 'celebrate'
 import { Router } from 'express'
+import Joi from 'joi'
 
 const forgotPasswordRoutes = Router()
 
@@ -35,12 +37,23 @@ const resetPasswordController = new ResetPasswordController(
 
 forgotPasswordRoutes.post(
   '/forgot-password',
+  celebrate({
+    [Segments.BODY]: {
+      email: Joi.string().email().required()
+    }
+  }),
   sendForgotPasswordEmailController.execute.bind(
     sendForgotPasswordEmailController
   )
 )
 forgotPasswordRoutes.post(
   '/forgot-password/reset',
+  celebrate({
+    [Segments.BODY]: {
+      token: Joi.string().required(),
+      password: Joi.string().min(6).required()
+    }
+  }),
   resetPasswordController.execute.bind(resetPasswordController)
 )
 

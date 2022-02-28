@@ -3,7 +3,9 @@ import { JWTAuthTokenProvider } from '@providers/AuthTokenProvider/JWTAuthTokenP
 import { BCryptHashProvider } from '@providers/HashProvider/BCryptHashProvider'
 import { PrismaUsersRepository } from '@repositories/prisma/PrismaUsersRepository'
 import { AuthenticateUserWithEmailAndPasswordUseCase } from '@useCases/AuthenticateUserWithEmailAndPasswordUseCase'
+import { celebrate, Segments } from 'celebrate'
 import { Router } from 'express'
+import Joi from 'joi'
 
 const authRoutes = Router()
 
@@ -24,6 +26,12 @@ const authenticateUserWithEmailAndPasswordController =
 
 authRoutes.post(
   '/auth',
+  celebrate({
+    [Segments.BODY]: {
+      email: Joi.string().email().required(),
+      password: Joi.string().required()
+    }
+  }),
   authenticateUserWithEmailAndPasswordController.execute.bind(
     authenticateUserWithEmailAndPasswordController
   )

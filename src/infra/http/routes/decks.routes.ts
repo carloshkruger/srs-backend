@@ -9,7 +9,9 @@ import { CreateDeckUseCase } from '@useCases/CreateDeckUseCase'
 import { DeleteDeckUseCase } from '@useCases/DeleteDeckUseCase'
 import { ListDecksForStudyUseCase } from '@useCases/ListDecksForStudyUseCase'
 import { UpdateDeckUseCase } from '@useCases/UpdateDeckUseCase'
+import { celebrate, Segments } from 'celebrate'
 import { Router } from 'express'
+import Joi from 'joi'
 
 const decksRoutes = Router()
 
@@ -46,14 +48,34 @@ const listDecksForStudyController = new ListDecksForStudyController(
 
 decksRoutes.post(
   '/decks/',
+  celebrate({
+    [Segments.BODY]: {
+      name: Joi.string().required(),
+      description: Joi.string().required()
+    }
+  }),
   createDeckController.execute.bind(createDeckController)
 )
 decksRoutes.put(
   '/decks/:id',
+  celebrate({
+    [Segments.BODY]: {
+      name: Joi.string().required(),
+      description: Joi.string().required()
+    },
+    [Segments.PARAMS]: {
+      id: Joi.string().uuid().required()
+    }
+  }),
   updateDeckController.execute.bind(updateDeckController)
 )
 decksRoutes.delete(
   '/decks/:id',
+  celebrate({
+    [Segments.PARAMS]: {
+      id: Joi.string().uuid().required()
+    }
+  }),
   deleteDeckController.execute.bind(deleteDeckController)
 )
 decksRoutes.get(
