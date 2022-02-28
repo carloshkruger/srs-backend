@@ -36,6 +36,12 @@ export class Card extends Entity<CardProps> {
     return this.props.nextReviewAt
   }
 
+  public get newCardReviews(): CardReview[] {
+    return this._newCardReviews
+  }
+
+  private _newCardReviews: CardReview[] = []
+
   private constructor(props: CardProps, id?: string) {
     super(props, id)
   }
@@ -73,6 +79,7 @@ export class Card extends Entity<CardProps> {
 
   public addCardReview(cardReview: CardReview): void {
     this.props.cardReviews.push(cardReview)
+    this._newCardReviews.push(cardReview)
   }
 
   public calculateAndUpdateNextReviewDate(): void {

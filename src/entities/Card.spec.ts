@@ -17,6 +17,7 @@ describe('Card', () => {
     expect(card.translatedText).toBe('translated text')
     expect(card.audioFileName).toBe('audiofile.mp3')
     expect(card.cardReviews).toEqual([])
+    expect(card.newCardReviews).toEqual([])
     expect(card.id).toEqual(expect.any(String))
   })
 
