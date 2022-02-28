@@ -47,7 +47,7 @@ const updatePasswordController = new UpdatePasswordController(
 const passwordValidation = Joi.string().min(6).required()
 
 usersRoutes.post(
-  '/users/',
+  '/users',
   celebrate({
     [Segments.BODY]: {
       name: Joi.string().required(),

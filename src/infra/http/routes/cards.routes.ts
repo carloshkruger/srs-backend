@@ -67,7 +67,7 @@ const listCardsForStudyController = new ListCardsForStudyController(
   listCardsForStudyUseCase
 )
 
-cardsRoutes.use(authorization())
+cardsRoutes.use('/cards', authorization())
 
 cardsRoutes.post(
   '/cards/',

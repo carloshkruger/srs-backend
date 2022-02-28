@@ -47,7 +47,7 @@ const listDecksForStudyController = new ListDecksForStudyController(
   listDecksForStudyUseCase
 )
 
-decksRoutes.use(authorization())
+decksRoutes.use('/decks', authorization())
 
 decksRoutes.post(
   '/decks/',
