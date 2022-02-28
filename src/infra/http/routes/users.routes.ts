@@ -12,6 +12,7 @@ import { UpdateUser } from '@useCases/UpdateUser'
 import { celebrate, Segments } from 'celebrate'
 import { Router } from 'express'
 import Joi from 'joi'
+import authorization from '../middlewares/authorization'
 
 const usersRoutes = Router()
 
@@ -69,10 +70,12 @@ usersRoutes.put(
       id: Joi.string().uuid().required()
     }
   }),
+  authorization(),
   updateUserController.execute.bind(updateUserController)
 )
 usersRoutes.delete(
   '/users/:id',
+  authorization(),
   celebrate({
     [Segments.PARAMS]: {
       id: Joi.string().uuid().required()
@@ -82,6 +85,7 @@ usersRoutes.delete(
 )
 usersRoutes.put(
   '/users/:id/password',
+  authorization(),
   celebrate({
     [Segments.BODY]: {
       currentPassword: passwordValidation,

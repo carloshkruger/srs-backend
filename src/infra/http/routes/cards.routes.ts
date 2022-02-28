@@ -17,6 +17,7 @@ import { UpdateCardUseCase } from '@useCases/UpdateCardUseCase'
 import { celebrate, Segments } from 'celebrate'
 import { Router } from 'express'
 import Joi from 'joi'
+import authorization from '../middlewares/authorization'
 
 const cardsRoutes = Router()
 
@@ -65,6 +66,8 @@ const listCardsForStudyUseCase = new ListCardsForStudyUseCase(
 const listCardsForStudyController = new ListCardsForStudyController(
   listCardsForStudyUseCase
 )
+
+cardsRoutes.use(authorization())
 
 cardsRoutes.post(
   '/cards/',

@@ -12,6 +12,7 @@ import { UpdateDeckUseCase } from '@useCases/UpdateDeckUseCase'
 import { celebrate, Segments } from 'celebrate'
 import { Router } from 'express'
 import Joi from 'joi'
+import authorization from '../middlewares/authorization'
 
 const decksRoutes = Router()
 
@@ -45,6 +46,8 @@ const listDecksForStudyUseCase = new ListDecksForStudyUseCase(
 const listDecksForStudyController = new ListDecksForStudyController(
   listDecksForStudyUseCase
 )
+
+decksRoutes.use(authorization())
 
 decksRoutes.post(
   '/decks/',
