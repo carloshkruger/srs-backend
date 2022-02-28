@@ -5,9 +5,9 @@ import { ListCardsForStudyController } from '@api/ListCardsForStudyController'
 import { UpdateCardController } from '@api/UpdateCardController'
 import { StorageProviderStub } from '@providers/StorageProvider/StorageProviderStub'
 import { TextToSpeechProviderStub } from '@providers/TextToSpeechProvider/TextToSpeechProviderStub'
-import { CardsRepositoryStub } from '@repositories/stubs/CardsRepositoryStub'
-import { DecksRepositoryStub } from '@repositories/stubs/DecksRepositoryStub'
-import { UsersRepositoryStub } from '@repositories/stubs/UsersRepositoryStub'
+import { PrismaCardsRepository } from '@repositories/prisma/PrismaCardsRepository'
+import { PrismaDecksRepository } from '@repositories/prisma/PrismaDecksRepository'
+import { PrismaUsersRepository } from '@repositories/prisma/PrismaUsersRepository'
 import { CreateCardReviewUseCase } from '@useCases/CreateCardReviewUseCase'
 import { CreateCardUseCase } from '@useCases/CreateCardUseCase'
 import { DeleteCardUseCase } from '@useCases/DeleteCardUseCase'
@@ -17,9 +17,9 @@ import { Router } from 'express'
 
 const cardsRoutes = Router()
 
-const usersRepository = new UsersRepositoryStub()
-const decksRepository = new DecksRepositoryStub()
-const cardsRepository = new CardsRepositoryStub()
+const usersRepository = new PrismaUsersRepository()
+const decksRepository = new PrismaDecksRepository()
+const cardsRepository = new PrismaCardsRepository()
 const textToSpeechProvider = new TextToSpeechProviderStub()
 const storageProvider = new StorageProviderStub()
 const createCardUseCase = new CreateCardUseCase(

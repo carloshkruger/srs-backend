@@ -1,18 +1,18 @@
 import { ResetPasswordController } from '@api/ResetPasswordController'
 import { SendForgotPasswordEmailController } from '@api/SendForgotPasswordEmailController'
-import { HashProviderStub } from '@providers/HashProvider/HashProviderStub'
+import { BCryptHashProvider } from '@providers/HashProvider/BCryptHashProvider'
 import { MailProviderStub } from '@providers/MailProvider/MailProviderStub'
-import { UsersRepositoryStub } from '@repositories/stubs/UsersRepositoryStub'
-import { UserTokensRepositoryStub } from '@repositories/stubs/UserTokensRepositoryStub'
+import { PrismaUsersRepository } from '@repositories/prisma/PrismaUsersRepository'
+import { PrismaUserTokensRepository } from '@repositories/prisma/PrismaUserTokensRepository'
 import { ResetPasswordUseCase } from '@useCases/ResetPasswordUseCase'
 import { SendForgotPasswordEmailUseCase } from '@useCases/SendForgotPasswordEmailUseCase'
 import { Router } from 'express'
 
 const forgotPasswordRoutes = Router()
 
-const usersRepository = new UsersRepositoryStub()
-const userTokensRepository = new UserTokensRepositoryStub()
-const hashProvider = new HashProviderStub()
+const usersRepository = new PrismaUsersRepository()
+const userTokensRepository = new PrismaUserTokensRepository()
+const hashProvider = new BCryptHashProvider()
 const mailProvider = new MailProviderStub()
 
 const sendForgotPasswordEmailUseCase = new SendForgotPasswordEmailUseCase(

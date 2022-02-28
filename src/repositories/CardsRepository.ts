@@ -14,7 +14,7 @@ export interface CardsRepository {
   findCardsForReview(data: FindCardsForReviewParams): Promise<Card[]>
 }
 
-type FindCardsForReviewParams = {
+export type FindCardsForReviewParams = {
   userId: string
   limit: number
   deckId?: string

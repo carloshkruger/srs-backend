@@ -1,15 +1,15 @@
 import { AuthenticateUserWithEmailAndPasswordController } from '@api/AuthenticateUserWithEmailAndPasswordController'
-import { AuthTokenProviderStub } from '@providers/AuthTokenProvider/AuthTokenProviderStub'
-import { HashProviderStub } from '@providers/HashProvider/HashProviderStub'
-import { UsersRepositoryStub } from '@repositories/stubs/UsersRepositoryStub'
+import { JWTAuthTokenProvider } from '@providers/AuthTokenProvider/JWTAuthTokenProvider'
+import { BCryptHashProvider } from '@providers/HashProvider/BCryptHashProvider'
+import { PrismaUsersRepository } from '@repositories/prisma/PrismaUsersRepository'
 import { AuthenticateUserWithEmailAndPasswordUseCase } from '@useCases/AuthenticateUserWithEmailAndPasswordUseCase'
 import { Router } from 'express'
 
 const authRoutes = Router()
 
-const usersRepository = new UsersRepositoryStub()
-const hashProvider = new HashProviderStub()
-const authTokenProvier = new AuthTokenProviderStub()
+const usersRepository = new PrismaUsersRepository()
+const hashProvider = new BCryptHashProvider()
+const authTokenProvier = new JWTAuthTokenProvider()
 
 const authenticateUserWithEmailAndPasswordUseCase =
   new AuthenticateUserWithEmailAndPasswordUseCase(

@@ -2,8 +2,8 @@ import { CreateUserWithEmailAndPasswordController } from '@api/CreateUserWithEma
 import { DeleteUserController } from '@api/DeleteUserController'
 import { UpdatePasswordController } from '@api/UpdatePasswordController'
 import { UpdateUserController } from '@api/UpdateUser'
-import { HashProviderStub } from '@providers/HashProvider/HashProviderStub'
-import { UsersRepositoryStub } from '@repositories/stubs/UsersRepositoryStub'
+import { BCryptHashProvider } from '@providers/HashProvider/BCryptHashProvider'
+import { PrismaUsersRepository } from '@repositories/prisma/PrismaUsersRepository'
 import { CreateUserWithEmailAndPassword } from '@useCases/CreateUserWithEmailAndPassword'
 import { DeleteUserUseCase } from '@useCases/DeleteUserUseCase'
 import { UpdatePasswordUseCase } from '@useCases/UpdatePasswordUseCase'
@@ -12,25 +12,25 @@ import { Router } from 'express'
 
 const usersRoutes = Router()
 
-const usersRepositoryStub = new UsersRepositoryStub()
-const hashProviderStub = new HashProviderStub()
+const usersRepository = new PrismaUsersRepository()
+const hashProvider = new BCryptHashProvider()
 
 const createUserWithEmailAndPasswordUseCase =
-  new CreateUserWithEmailAndPassword(usersRepositoryStub, hashProviderStub)
+  new CreateUserWithEmailAndPassword(usersRepository, hashProvider)
 const createUserWithEmailAndPasswordController =
   new CreateUserWithEmailAndPasswordController(
     createUserWithEmailAndPasswordUseCase
   )
 
-const updateUserUseCase = new UpdateUser(usersRepositoryStub)
+const updateUserUseCase = new UpdateUser(usersRepository)
 const updateUserController = new UpdateUserController(updateUserUseCase)
 
-const deleteUserUseCase = new DeleteUserUseCase(usersRepositoryStub)
+const deleteUserUseCase = new DeleteUserUseCase(usersRepository)
 const deleteUserController = new DeleteUserController(deleteUserUseCase)
 
 const updatePasswordUseCase = new UpdatePasswordUseCase(
-  usersRepositoryStub,
-  hashProviderStub
+  usersRepository,
+  hashProvider
 )
 const updatePasswordController = new UpdatePasswordController(
   updatePasswordUseCase
