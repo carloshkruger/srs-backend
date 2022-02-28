@@ -6,6 +6,7 @@ import swaggerConfig from './swagger/swagger.config'
 import { errors } from 'celebrate'
 import authentication from './middlewares/authentication'
 import { requestLimiter } from './middlewares/requestLImiter'
+import { setupSecurityHeaders } from './middlewares/setupSecurityHeaders'
 
 const bootstrap = async () => {
   await connectDatabase()
@@ -15,6 +16,7 @@ const bootstrap = async () => {
   app.use(express.json())
   app.use(requestLimiter)
   app.use(authentication)
+  setupSecurityHeaders(app)
   setupRoutes(app)
   app.use('/api-docs', serve, setup(swaggerConfig))
   app.use(errors())
