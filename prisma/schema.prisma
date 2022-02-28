@@ -1,0 +1,69 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String      @id @db.Uuid
+  name      String      @db.VarChar()
+  email     String      @db.VarChar()
+  password  String      @db.VarChar()
+  createdAt DateTime    @default(now()) @map("created_at")
+  updatedAt DateTime    @default(now()) @map("updated_at")
+  decks     Deck[]
+  userToken UserToken[]
+
+  @@map("users")
+}
+
+model UserToken {
+  id        String   @id @db.Uuid
+  token     String   @db.VarChar()
+  createdAt DateTime @default(now()) @map("created_at")
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String   @map("user_id") @db.Uuid
+
+  @@map("user_tokens")
+}
+
+model Deck {
+  id          String   @id @db.Uuid
+  name        String   @db.VarChar()
+  description String?  @db.VarChar()
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId      String   @map("user_id") @db.Uuid
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @default(now()) @map("updated_at")
+  cards       Card[]
+
+  @@map("decks")
+}
+
+model Card {
+  id             String       @id @db.Uuid
+  originalText   String       @map("original_text")
+  translatedText String       @map("translated_text")
+  audioFileName  String       @map("audio_file_name") @db.VarChar()
+  nextReviewAt   DateTime?    @map("next_review_at")
+  createdAt      DateTime     @default(now()) @map("created_at")
+  updatedAt      DateTime     @default(now()) @map("updated_at")
+  deck           Deck         @relation(fields: [deckId], references: [id], onDelete: Cascade)
+  deckId         String       @map("deck_id") @db.Uuid
+  reviews        CardReview[]
+
+  @@map("cards")
+}
+
+model CardReview {
+  id              String   @id @db.Uuid
+  difficultyLevel Int      @map("difficulty_level") @db.SmallInt
+  createdAt       DateTime @default(now()) @map("created_at")
+  card            Card     @relation(fields: [cardId], references: [id], onDelete: Cascade)
+  cardId          String   @map("card_id") @db.Uuid
+
+  @@map("card_reviews")
+}
