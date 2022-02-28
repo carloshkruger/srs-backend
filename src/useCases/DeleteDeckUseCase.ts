@@ -1,3 +1,4 @@
+import { StorageProvider } from '@providers/StorageProvider/StorageProvider.interface'
 import { DecksRepository } from '@repositories/DecksRepository'
 import { UsersRepository } from '@repositories/UsersRepository'
 import {
@@ -14,8 +15,9 @@ interface Request {
 
 export class DeleteDeckUseCase implements UseCase<Request, void> {
   constructor(
-    private usersRepository: UsersRepository,
-    private decksRepository: DecksRepository
+    private readonly usersRepository: UsersRepository,
+    private readonly decksRepository: DecksRepository,
+    private readonly storageProvider: StorageProvider
   ) {}
 
   async execute({ userId, deckId }: Request): Promise<void> {
@@ -36,5 +38,11 @@ export class DeleteDeckUseCase implements UseCase<Request, void> {
     }
 
     await this.decksRepository.deleteById(deckId)
+    await this.storageProvider.deleteFolder([
+      'users',
+      deck.userId,
+      'decks',
+      deck.id
+    ])
   }
 }

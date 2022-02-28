@@ -1,3 +1,5 @@
+import { StorageProvider } from '@providers/StorageProvider/StorageProvider.interface'
+import { StorageProviderStub } from '@providers/StorageProvider/StorageProviderStub'
 import { DecksRepository } from '@repositories/DecksRepository'
 import { DecksRepositoryStub } from '@repositories/stubs/DecksRepositoryStub'
 import { UsersRepositoryStub } from '@repositories/stubs/UsersRepositoryStub'
@@ -11,11 +13,17 @@ describe('DeleteDeckController', () => {
   let useCase: DeleteDeckUseCase
   let usersRepository: UsersRepository
   let decksRepository: DecksRepository
+  let storageProvider: StorageProvider
 
   beforeEach(() => {
     usersRepository = new UsersRepositoryStub()
     decksRepository = new DecksRepositoryStub()
-    useCase = new DeleteDeckUseCase(usersRepository, decksRepository)
+    storageProvider = new StorageProviderStub()
+    useCase = new DeleteDeckUseCase(
+      usersRepository,
+      decksRepository,
+      storageProvider
+    )
     controller = new DeleteDeckController(useCase)
   })
 

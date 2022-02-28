@@ -2,6 +2,7 @@ import { CreateDeckController } from '@api/CreateDeckController'
 import { DeleteDeckController } from '@api/DeleteDeckController'
 import { ListDecksForStudyController } from '@api/ListDecksForStudyController'
 import { UpdateDeckController } from '@api/UpdateDeckController'
+import { StorageProviderStub } from '@providers/StorageProvider/StorageProviderStub'
 import { PrismaDecksRepository } from '@repositories/prisma/PrismaDecksRepository'
 import { PrismaUsersRepository } from '@repositories/prisma/PrismaUsersRepository'
 import { CreateDeckUseCase } from '@useCases/CreateDeckUseCase'
@@ -14,6 +15,7 @@ const decksRoutes = Router()
 
 const usersRepositoryStub = new PrismaUsersRepository()
 const decksRepositoryStub = new PrismaDecksRepository()
+const storageProvider = new StorageProviderStub()
 
 const createDeckUseCase = new CreateDeckUseCase(
   usersRepositoryStub,
@@ -29,7 +31,8 @@ const updateDeckController = new UpdateDeckController(updateDeckUseCase)
 
 const deleteDeckUseCase = new DeleteDeckUseCase(
   usersRepositoryStub,
-  decksRepositoryStub
+  decksRepositoryStub,
+  storageProvider
 )
 const deleteDeckController = new DeleteDeckController(deleteDeckUseCase)
 
