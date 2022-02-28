@@ -1,3 +1,5 @@
+import { StorageProvider } from '@providers/StorageProvider/StorageProvider.interface'
+import { StorageProviderStub } from '@providers/StorageProvider/StorageProviderStub'
 import { UsersRepositoryStub } from '@repositories/stubs/UsersRepositoryStub'
 import { UsersRepository } from '@repositories/UsersRepository'
 import { DeleteUserUseCase } from '@useCases/DeleteUserUseCase'
@@ -8,10 +10,12 @@ describe('DeleteUserController', () => {
   let controller: DeleteUserController
   let useCase: DeleteUserUseCase
   let usersRepository: UsersRepository
+  let storageProvider: StorageProvider
 
   beforeEach(() => {
     usersRepository = new UsersRepositoryStub()
-    useCase = new DeleteUserUseCase(usersRepository)
+    storageProvider = new StorageProviderStub()
+    useCase = new DeleteUserUseCase(usersRepository, storageProvider)
     controller = new DeleteUserController(useCase)
   })
 

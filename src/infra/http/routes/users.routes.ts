@@ -3,6 +3,7 @@ import { DeleteUserController } from '@api/DeleteUserController'
 import { UpdatePasswordController } from '@api/UpdatePasswordController'
 import { UpdateUserController } from '@api/UpdateUser'
 import { BCryptHashProvider } from '@providers/HashProvider/BCryptHashProvider'
+import { StorageProviderStub } from '@providers/StorageProvider/StorageProviderStub'
 import { PrismaUsersRepository } from '@repositories/prisma/PrismaUsersRepository'
 import { CreateUserWithEmailAndPassword } from '@useCases/CreateUserWithEmailAndPassword'
 import { DeleteUserUseCase } from '@useCases/DeleteUserUseCase'
@@ -14,6 +15,7 @@ const usersRoutes = Router()
 
 const usersRepository = new PrismaUsersRepository()
 const hashProvider = new BCryptHashProvider()
+const storageProvider = new StorageProviderStub()
 
 const createUserWithEmailAndPasswordUseCase =
   new CreateUserWithEmailAndPassword(usersRepository, hashProvider)
@@ -25,7 +27,10 @@ const createUserWithEmailAndPasswordController =
 const updateUserUseCase = new UpdateUser(usersRepository)
 const updateUserController = new UpdateUserController(updateUserUseCase)
 
-const deleteUserUseCase = new DeleteUserUseCase(usersRepository)
+const deleteUserUseCase = new DeleteUserUseCase(
+  usersRepository,
+  storageProvider
+)
 const deleteUserController = new DeleteUserController(deleteUserUseCase)
 
 const updatePasswordUseCase = new UpdatePasswordUseCase(
