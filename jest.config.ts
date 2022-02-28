@@ -14,7 +14,9 @@ module.exports = {
     '!src/infra/**',
     '!src/index.ts',
     '!src/entities/Entity.ts',
-    '!src/**/mocks/**'
+    '!src/**/mocks/**',
+    '!src/shared/PrismaUtils.ts',
+    '!src/repositories/**'
   ],
   coverageDirectory: 'coverage',
   coverageReporters: ['text-summary', 'lcov'],
