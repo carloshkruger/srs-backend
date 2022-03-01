@@ -107,7 +107,9 @@ cardsRoutes.post(
   '/cards/:id/review',
   celebrate({
     [Segments.BODY]: {
-      difficultyLevel: Joi.number().valid(CardReviewDifficultyLevel).required()
+      difficultyLevel: Joi.number()
+        .valid(...Object.values(CardReviewDifficultyLevel))
+        .required()
     },
     [Segments.PARAMS]: {
       id: Joi.string().uuid().required()
