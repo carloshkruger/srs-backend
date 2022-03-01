@@ -15,6 +15,20 @@ services:
     networks:
       - srs-app-network
 
+  postgres-testing:
+    image: postgres
+    restart: always
+    ports:
+      - '5434:5432'
+    volumes:
+      - ./data/postgres-testing:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: '123456'
+      POSTGRES_USER: postgres
+      POSTGRES_DB: srs_app
+    networks:
+      - srs-app-network
+
   pgadmin:
     image: dpage/pgadmin4
     environment:

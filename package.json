@@ -11,6 +11,7 @@
     "prettier-format": "prettier --config .prettierrc 'src/**/*.ts' --write",
     "test": "jest --runInBand",
     "test:cov": "jest --no-cache --coverage --runInBand",
+    "test:e2e": "npx dotenv -e .env.test -- npx prisma migrate dev && jest -i --no-cache --runInBand --config ./tests-e2e/jest-e2e.ts",
     "prepare": "husky install"
   },
   "repository": {
@@ -54,6 +55,7 @@
     "@types/swagger-ui-express": "^4.1.3",
     "@typescript-eslint/eslint-plugin": "5.12.0",
     "@typescript-eslint/parser": "5.12.0",
+    "dotenv-cli": "5.0.0",
     "eslint": "8.9.0",
     "eslint-config-prettier": "8.4.0",
     "eslint-plugin-prettier": "4.0.0",
