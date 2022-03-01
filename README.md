@@ -18,6 +18,7 @@ For this project, I tried to use concepts of SOLID, Clean Architecture and TDD.
 - Typescript
 - Prisma
 - Express
+- Swagger
 - BCrypt
 - JWT
 - Joi
