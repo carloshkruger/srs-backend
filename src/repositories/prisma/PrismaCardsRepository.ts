@@ -139,9 +139,16 @@ export class PrismaCardsRepository implements CardsRepository {
           id: deckId,
           userId: userId
         },
-        nextReviewAt: {
-          lte: new Date()
-        }
+        OR: [
+          {
+            nextReviewAt: {
+              lte: new Date()
+            }
+          },
+          {
+            nextReviewAt: null
+          }
+        ]
       },
       include: {
         reviews: true

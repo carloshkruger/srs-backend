@@ -50,6 +50,8 @@ abstract class Controller {
   }
 
   protected fail(error: Error): ControllerResponse {
+    console.error(error)
+
     try {
       return {
         statusCode: 400,
