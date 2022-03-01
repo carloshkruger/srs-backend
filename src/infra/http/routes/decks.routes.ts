@@ -2,9 +2,8 @@ import { CreateDeckController } from '@api/CreateDeckController'
 import { DeleteDeckController } from '@api/DeleteDeckController'
 import { ListDecksForStudyController } from '@api/ListDecksForStudyController'
 import { UpdateDeckController } from '@api/UpdateDeckController'
-import { StorageProviderStub } from '@providers/StorageProvider/StorageProviderStub'
-import { PrismaDecksRepository } from '@repositories/prisma/PrismaDecksRepository'
-import { PrismaUsersRepository } from '@repositories/prisma/PrismaUsersRepository'
+import { storageProvider } from '@providers/StorageProvider'
+import { usersRepository, decksRepository } from '@repositories/index'
 import { CreateDeckUseCase } from '@useCases/CreateDeckUseCase'
 import { DeleteDeckUseCase } from '@useCases/DeleteDeckUseCase'
 import { ListDecksForStudyUseCase } from '@useCases/ListDecksForStudyUseCase'
@@ -16,32 +15,28 @@ import authorization from '../middlewares/authorization'
 
 const decksRoutes = Router()
 
-const usersRepositoryStub = new PrismaUsersRepository()
-const decksRepositoryStub = new PrismaDecksRepository()
-const storageProvider = new StorageProviderStub()
-
 const createDeckUseCase = new CreateDeckUseCase(
-  usersRepositoryStub,
-  decksRepositoryStub
+  usersRepository,
+  decksRepository
 )
 const createDeckController = new CreateDeckController(createDeckUseCase)
 
 const updateDeckUseCase = new UpdateDeckUseCase(
-  usersRepositoryStub,
-  decksRepositoryStub
+  usersRepository,
+  decksRepository
 )
 const updateDeckController = new UpdateDeckController(updateDeckUseCase)
 
 const deleteDeckUseCase = new DeleteDeckUseCase(
-  usersRepositoryStub,
-  decksRepositoryStub,
+  usersRepository,
+  decksRepository,
   storageProvider
 )
 const deleteDeckController = new DeleteDeckController(deleteDeckUseCase)
 
 const listDecksForStudyUseCase = new ListDecksForStudyUseCase(
-  usersRepositoryStub,
-  decksRepositoryStub
+  usersRepository,
+  decksRepository
 )
 const listDecksForStudyController = new ListDecksForStudyController(
   listDecksForStudyUseCase

@@ -2,9 +2,9 @@ import { CreateUserWithEmailAndPasswordController } from '@api/CreateUserWithEma
 import { DeleteUserController } from '@api/DeleteUserController'
 import { UpdatePasswordController } from '@api/UpdatePasswordController'
 import { UpdateUserController } from '@api/UpdateUser'
-import { BCryptHashProvider } from '@providers/HashProvider/BCryptHashProvider'
-import { StorageProviderStub } from '@providers/StorageProvider/StorageProviderStub'
-import { PrismaUsersRepository } from '@repositories/prisma/PrismaUsersRepository'
+import { hashProvider } from '@providers/HashProvider'
+import { storageProvider } from '@providers/StorageProvider'
+import { usersRepository } from '@repositories/index'
 import { CreateUserWithEmailAndPassword } from '@useCases/CreateUserWithEmailAndPassword'
 import { DeleteUserUseCase } from '@useCases/DeleteUserUseCase'
 import { UpdatePasswordUseCase } from '@useCases/UpdatePasswordUseCase'
@@ -15,10 +15,6 @@ import Joi from 'joi'
 import authorization from '../middlewares/authorization'
 
 const usersRoutes = Router()
-
-const usersRepository = new PrismaUsersRepository()
-const hashProvider = new BCryptHashProvider()
-const storageProvider = new StorageProviderStub()
 
 const createUserWithEmailAndPasswordUseCase =
   new CreateUserWithEmailAndPassword(usersRepository, hashProvider)
