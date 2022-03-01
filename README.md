@@ -5,12 +5,12 @@
 This is the backend for a Spaced Repetition System. 
 
 ## Functionalities
-- Create user
+- Create/update/delete user
 - Authentication (JWT)
 - Forgot password
-- Create decks of cards
-- Create cards
-- Study the cards 
+- Create/update/delete decks of cards
+- Create/delete cards
+- List and study the cards 
 
 ## Tech stack
 - Node.js
