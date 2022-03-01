@@ -1,10 +1,10 @@
 # SRS Backend
 
-# About the project
+## About the project
 
 This is the backend for a Spaced Repetition System. 
 
-# Functionalities
+## Functionalities
 - Create user
 - Authentication (JWT)
 - Forgot password
@@ -12,7 +12,7 @@ This is the backend for a Spaced Repetition System.
 - Create cards
 - Study the cards 
 
-# Tech stack
+## Tech stack
 - Node.js
 - Typescript
 - Prisma
