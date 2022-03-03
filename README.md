@@ -2,21 +2,23 @@
 
 ## About the project
 
-This is the backend for a Spaced Repetition System. 
+This is the backend for a Spaced Repetition System, a learning technique where newly introduced and more difficult flashcards are shown more frequently, while older and less difficult flashcards are shown less frequently in order to exploit the psychological spacing effect.
+For this project, I tried to use concepts of SOLID, Clean Architecture and TDD.
 
 ## Functionalities
-- Create user
+- Create/update/delete user
 - Authentication (JWT)
 - Forgot password
-- Create decks of cards
-- Create cards
-- Study the cards 
+- Create/update/delete decks of cards
+- Create/delete cards
+- List and study the cards 
 
 ## Tech stack
 - Node.js
 - Typescript
 - Prisma
 - Express
+- Swagger
 - BCrypt
 - JWT
 - Joi
