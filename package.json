@@ -26,6 +26,7 @@
   },
   "homepage": "https://github.com/carloshkruger/srs-backend#readme",
   "dependencies": {
+    "@google-cloud/text-to-speech": "3.4.0",
     "@prisma/client": "3.10.0",
     "aws-sdk": "2.1085.0",
     "bcrypt": "5.0.1",
