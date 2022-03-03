@@ -2,7 +2,7 @@ interface TemplateVariables {
   [key: string]: string | number
 }
 
-export default interface ParseMailTemplate {
+export interface ParseMailTemplate {
   file: string
   variables: TemplateVariables
 }
