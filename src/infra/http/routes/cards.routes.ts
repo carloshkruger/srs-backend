@@ -71,7 +71,7 @@ cardsRoutes.post(
   celebrate({
     [Segments.BODY]: {
       deckId: Joi.string().uuid().required(),
-      originalText: Joi.string().required(),
+      originalText: Joi.string().max(200).required(),
       translatedText: Joi.string().required()
     }
   }),
@@ -82,7 +82,7 @@ cardsRoutes.put(
   celebrate({
     [Segments.BODY]: {
       deckId: Joi.string().uuid().required(),
-      originalText: Joi.string().required(),
+      originalText: Joi.string().max(200).required(),
       translatedText: Joi.string().required()
     },
     [Segments.PARAMS]: {
