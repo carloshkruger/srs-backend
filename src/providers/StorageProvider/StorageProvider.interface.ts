@@ -9,7 +9,6 @@ interface FileBufferInfo extends FileInfo {
 
 interface StorageProvider {
   saveFileFromBuffer(data: FileBufferInfo): Promise<void>
-  saveFile(data: FileInfo): Promise<void>
   deleteFile(data: FileInfo): Promise<void>
   deleteFolder(filePath: string[]): Promise<void>
 }
