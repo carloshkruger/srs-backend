@@ -1,9 +1,9 @@
-import { UpdateUser } from '@useCases/UpdateUser'
+import { UpdateUserUseCase } from '@useCases/UpdateUserUseCase'
 import { Request } from 'express'
 import { Controller, ControllerResponse } from './Controller'
 
 export class UpdateUserController extends Controller {
-  constructor(private useCase: UpdateUser) {
+  constructor(private useCase: UpdateUserUseCase) {
     super()
   }
 

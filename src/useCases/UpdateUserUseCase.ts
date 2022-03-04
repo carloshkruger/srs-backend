@@ -8,7 +8,7 @@ export interface Request {
   email: string
 }
 
-export class UpdateUser implements UseCase<Request, void> {
+export class UpdateUserUseCase implements UseCase<Request, void> {
   constructor(private usersRepository: UsersRepository) {}
 
   async execute({ id, name, email }: Request): Promise<void> {

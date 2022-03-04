@@ -1,17 +1,17 @@
 import { UsersRepositoryStub } from '@repositories/stubs/UsersRepositoryStub'
 import { UsersRepository } from '@repositories/UsersRepository'
-import { UpdateUser } from '@useCases/UpdateUser'
+import { UpdateUserUseCase } from '@useCases/UpdateUserUseCase'
 import { Request } from 'express'
-import { UpdateUserController } from './UpdateUser'
+import { UpdateUserController } from './UpdateUserController'
 
-describe('UpdateUser', () => {
+describe('UpdateUserController', () => {
   let controller: UpdateUserController
-  let useCase: UpdateUser
+  let useCase: UpdateUserUseCase
   let usersRepository: UsersRepository
 
   beforeEach(() => {
     usersRepository = new UsersRepositoryStub()
-    useCase = new UpdateUser(usersRepository)
+    useCase = new UpdateUserUseCase(usersRepository)
     controller = new UpdateUserController(useCase)
   })
 

@@ -3,20 +3,23 @@ import { HashProvider } from '@providers/HashProvider/HashProvider.interface'
 import { HashProviderStub } from '@providers/HashProvider/HashProviderStub'
 import { UsersRepositoryStub } from '@repositories/stubs/UsersRepositoryStub'
 import { UsersRepository } from '@repositories/UsersRepository'
-import { CreateUserWithEmailAndPassword } from '@useCases/CreateUserWithEmailAndPassword'
+import { CreateUserWithEmailAndPasswordUseCase } from '@useCases/CreateUserWithEmailAndPasswordUseCase'
 import { Request } from 'express'
-import { CreateUserWithEmailAndPasswordController } from './CreateUserWithEmailAndPassword'
+import { CreateUserWithEmailAndPasswordController } from './CreateUserWithEmailAndPasswordController'
 
-describe('CreateUserWithEmailAndPassword', () => {
+describe('CreateUserWithEmailAndPasswordController', () => {
   let controller: CreateUserWithEmailAndPasswordController
-  let useCase: CreateUserWithEmailAndPassword
+  let useCase: CreateUserWithEmailAndPasswordUseCase
   let hashProvider: HashProvider
   let usersRepository: UsersRepository
 
   beforeEach(() => {
     usersRepository = new UsersRepositoryStub()
     hashProvider = new HashProviderStub()
-    useCase = new CreateUserWithEmailAndPassword(usersRepository, hashProvider)
+    useCase = new CreateUserWithEmailAndPasswordUseCase(
+      usersRepository,
+      hashProvider
+    )
     controller = new CreateUserWithEmailAndPasswordController(useCase)
   })
 

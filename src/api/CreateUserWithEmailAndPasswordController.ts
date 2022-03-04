@@ -1,9 +1,9 @@
-import { CreateUserWithEmailAndPassword } from '@useCases/CreateUserWithEmailAndPassword'
+import { CreateUserWithEmailAndPasswordUseCase } from '@useCases/CreateUserWithEmailAndPasswordUseCase'
 import { Request } from 'express'
 import { Controller, ControllerResponse } from './Controller'
 
 export class CreateUserWithEmailAndPasswordController extends Controller {
-  constructor(private useCase: CreateUserWithEmailAndPassword) {
+  constructor(private useCase: CreateUserWithEmailAndPasswordUseCase) {
     super()
   }
 

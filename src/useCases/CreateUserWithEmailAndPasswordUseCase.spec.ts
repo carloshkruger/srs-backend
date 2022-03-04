@@ -4,18 +4,18 @@ import { HashProvider } from '@providers/HashProvider/HashProvider.interface'
 import { HashProviderStub } from '@providers/HashProvider/HashProviderStub'
 import { UsersRepositoryStub } from '@repositories/stubs/UsersRepositoryStub'
 import { UsersRepository } from '@repositories/UsersRepository'
-import { CreateUserWithEmailAndPassword } from './CreateUserWithEmailAndPassword'
+import { CreateUserWithEmailAndPasswordUseCase } from './CreateUserWithEmailAndPasswordUseCase'
 import { EmailAlreadyRegistered } from './errors'
 
-describe('CreateUserWithEmailAndPassword', () => {
-  let createUserWithEmailAndPassword: CreateUserWithEmailAndPassword
+describe('CreateUserWithEmailAndPasswordUseCase', () => {
+  let createUserWithEmailAndPassword: CreateUserWithEmailAndPasswordUseCase
   let usersRepository: UsersRepository
   let hashProvider: HashProvider
 
   beforeEach(() => {
     usersRepository = new UsersRepositoryStub()
     hashProvider = new HashProviderStub()
-    createUserWithEmailAndPassword = new CreateUserWithEmailAndPassword(
+    createUserWithEmailAndPassword = new CreateUserWithEmailAndPasswordUseCase(
       usersRepository,
       hashProvider
     )

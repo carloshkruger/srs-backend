@@ -10,7 +10,9 @@ export interface Request {
   password: string
 }
 
-export class CreateUserWithEmailAndPassword implements UseCase<Request, User> {
+export class CreateUserWithEmailAndPasswordUseCase
+  implements UseCase<Request, User>
+{
   constructor(
     private usersRepository: UsersRepository,
     private hashProvider: HashProvider

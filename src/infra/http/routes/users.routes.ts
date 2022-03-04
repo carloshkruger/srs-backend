@@ -1,14 +1,14 @@
-import { CreateUserWithEmailAndPasswordController } from '@api/CreateUserWithEmailAndPassword'
+import { CreateUserWithEmailAndPasswordController } from '@api/CreateUserWithEmailAndPasswordController'
 import { DeleteUserController } from '@api/DeleteUserController'
 import { UpdatePasswordController } from '@api/UpdatePasswordController'
-import { UpdateUserController } from '@api/UpdateUser'
+import { UpdateUserController } from '@api/UpdateUserController'
 import { hashProvider } from '@providers/HashProvider'
 import { storageProvider } from '@providers/StorageProvider'
 import { usersRepository } from '@repositories/index'
-import { CreateUserWithEmailAndPassword } from '@useCases/CreateUserWithEmailAndPassword'
+import { CreateUserWithEmailAndPasswordUseCase } from '@useCases/CreateUserWithEmailAndPasswordUseCase'
 import { DeleteUserUseCase } from '@useCases/DeleteUserUseCase'
 import { UpdatePasswordUseCase } from '@useCases/UpdatePasswordUseCase'
-import { UpdateUser } from '@useCases/UpdateUser'
+import { UpdateUserUseCase } from '@useCases/UpdateUserUseCase'
 import { celebrate, Segments } from 'celebrate'
 import { Router } from 'express'
 import Joi from 'joi'
@@ -17,13 +17,13 @@ import authorization from '../middlewares/authorization'
 const usersRoutes = Router()
 
 const createUserWithEmailAndPasswordUseCase =
-  new CreateUserWithEmailAndPassword(usersRepository, hashProvider)
+  new CreateUserWithEmailAndPasswordUseCase(usersRepository, hashProvider)
 const createUserWithEmailAndPasswordController =
   new CreateUserWithEmailAndPasswordController(
     createUserWithEmailAndPasswordUseCase
   )
 
-const updateUserUseCase = new UpdateUser(usersRepository)
+const updateUserUseCase = new UpdateUserUseCase(usersRepository)
 const updateUserController = new UpdateUserController(updateUserUseCase)
 
 const deleteUserUseCase = new DeleteUserUseCase(

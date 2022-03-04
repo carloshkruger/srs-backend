@@ -2,15 +2,15 @@ import { UserMockBuilder } from '@entities/mocks/UserMockBuilder'
 import { UsersRepositoryStub } from '@repositories/stubs/UsersRepositoryStub'
 import { UsersRepository } from '@repositories/UsersRepository'
 import { EmailAlreadyRegistered, UserNotFound } from './errors'
-import { UpdateUser } from './UpdateUser'
+import { UpdateUserUseCase } from './UpdateUserUseCase'
 
-describe('UpdateUser', () => {
-  let updateUser: UpdateUser
+describe('UpdateUserUseCase', () => {
+  let updateUser: UpdateUserUseCase
   let usersRepository: UsersRepository
 
   beforeEach(() => {
     usersRepository = new UsersRepositoryStub()
-    updateUser = new UpdateUser(usersRepository)
+    updateUser = new UpdateUserUseCase(usersRepository)
   })
 
   it('should throw an error if the user was not found', async () => {
