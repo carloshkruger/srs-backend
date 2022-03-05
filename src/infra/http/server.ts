@@ -5,7 +5,9 @@ const bootstrap = async () => {
 
   const app = (await import('./app')).default
 
-  app.listen(3000, () => console.log('Server online'))
+  const port = process.env.PORT
+
+  app.listen(port, () => console.log('Server online'))
 }
 
 bootstrap()
