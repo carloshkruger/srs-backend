@@ -9,7 +9,7 @@ describe('Auth e2e', () => {
   beforeEach(async () => await prismaClient.user.deleteMany())
   afterAll(async () => await clearDatabase())
 
-  describe('POST /auth', () => {
+  describe('POST /v1/auth', () => {
     it('should generate a token', async () => {
       const userId = 'd7387bf2-37bc-4847-9e1c-cd435bd940d0'
       const email = 'email@email.com'
@@ -27,7 +27,7 @@ describe('Auth e2e', () => {
       })
 
       await request(app)
-        .post('/auth')
+        .post('/v1/auth')
         .send({
           email,
           password

@@ -25,10 +25,10 @@ describe('Decks e2e', () => {
   beforeEach(async () => await prismaClient.deck.deleteMany())
   afterAll(async () => await clearDatabase())
 
-  describe('POST /decks', () => {
+  describe('POST /v1/decks', () => {
     it('should create a deck', async () => {
       await request(app)
-        .post('/decks')
+        .post('/v1/decks')
         .set('authorization', `Bearer ${token}`)
         .send({
           name: 'deck name',
@@ -47,7 +47,7 @@ describe('Decks e2e', () => {
 
     it('should not be possible to create a deck without the JWT token', async () => {
       await request(app)
-        .post('/decks')
+        .post('/v1/decks')
         .send({
           name: 'deck name',
           description: 'deck description'
@@ -56,7 +56,7 @@ describe('Decks e2e', () => {
     })
   })
 
-  describe('PUT /decks/:id', () => {
+  describe('PUT /v1/decks/:id', () => {
     it('should update a deck', async () => {
       const deckId = 'a02413e0-4ee9-4f5d-be85-ca0e8511030c'
 
@@ -70,7 +70,7 @@ describe('Decks e2e', () => {
       })
 
       await request(app)
-        .put(`/decks/${deckId}`)
+        .put(`/v1/decks/${deckId}`)
         .set('authorization', `Bearer ${token}`)
         .send({
           name: 'deck name 2',
@@ -93,7 +93,7 @@ describe('Decks e2e', () => {
       const deckId = 'a02413e0-4ee9-4f5d-be85-ca0e8511030c'
 
       await request(app)
-        .put(`/decks/${deckId}`)
+        .put(`/v1/decks/${deckId}`)
         .send({
           name: 'deck name 2',
           description: 'deck description 2'
@@ -102,7 +102,7 @@ describe('Decks e2e', () => {
     })
   })
 
-  describe('DELETE /decks/:id', () => {
+  describe('DELETE /v1/decks/:id', () => {
     it('should delete a deck and its cards', async () => {
       const deckId = 'a02413e0-4ee9-4f5d-be85-ca0e8511030c'
 
@@ -133,7 +133,7 @@ describe('Decks e2e', () => {
       expect(cardsCountBeforeDelete).toBe(1)
 
       await request(app)
-        .delete(`/decks/${deckId}`)
+        .delete(`/v1/decks/${deckId}`)
         .set('authorization', `Bearer ${token}`)
         .expect(204)
 
@@ -151,11 +151,11 @@ describe('Decks e2e', () => {
     it('should not be possible to delete a deck without the JWT token', async () => {
       const deckId = 'a02413e0-4ee9-4f5d-be85-ca0e8511030c'
 
-      await request(app).delete(`/decks/${deckId}`).expect(403)
+      await request(app).delete(`/v1/decks/${deckId}`).expect(403)
     })
   })
 
-  describe('GET /decks/study', () => {
+  describe('GET /v1/decks/study', () => {
     it('should return a list of decks and quantity of cards', async () => {
       await prismaClient.deck.create({
         data: {
@@ -177,7 +177,7 @@ describe('Decks e2e', () => {
       })
 
       await request(app)
-        .get('/decks/study')
+        .get('/v1/decks/study')
         .set('authorization', `Bearer ${token}`)
         .expect(200)
         .then((response) => {
@@ -187,7 +187,7 @@ describe('Decks e2e', () => {
 
     it('should return an empty list if there is no deck created', async () => {
       await request(app)
-        .get('/decks/study')
+        .get('/v1/decks/study')
         .set('authorization', `Bearer ${token}`)
         .expect(200)
         .then((response) => {
@@ -228,7 +228,7 @@ describe('Decks e2e', () => {
       })
 
       await request(app)
-        .get('/decks/study')
+        .get('/v1/decks/study')
         .set('authorization', `Bearer ${token}`)
         .expect(200)
         .then((response) => {
@@ -237,7 +237,7 @@ describe('Decks e2e', () => {
     })
 
     it('should not be possible to return a list of decks without the JWT token', async () => {
-      await request(app).get('/decks/study').expect(403)
+      await request(app).get('/v1/decks/study').expect(403)
     })
   })
 })

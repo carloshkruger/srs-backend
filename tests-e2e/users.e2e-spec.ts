@@ -10,10 +10,10 @@ describe('Users e2e', () => {
   beforeEach(async () => await prismaClient.user.deleteMany())
   afterAll(async () => await clearDatabase())
 
-  describe('POST /users', () => {
+  describe('POST /v1/users', () => {
     it('should create an user', async () => {
       await request(app)
-        .post('/users')
+        .post('/v1/users')
         .send({
           name: 'user name',
           email: 'email@email.com',
@@ -31,7 +31,7 @@ describe('Users e2e', () => {
     })
   })
 
-  describe('PUT /users/:id', () => {
+  describe('PUT /v1/users/:id', () => {
     it('should update an user', async () => {
       const userId = 'd7387bf2-37bc-4847-9e1c-cd435bd940d0'
       await prismaClient.user.create({
@@ -46,7 +46,7 @@ describe('Users e2e', () => {
       const token = new JWTAuthTokenProvider().generate(userId)
 
       await request(app)
-        .put(`/users/${userId}`)
+        .put(`/v1/users/${userId}`)
         .set('authorization', `Bearer ${token}`)
         .send({
           name: 'user name 2',
@@ -71,7 +71,7 @@ describe('Users e2e', () => {
       const userId = 'd7387bf2-37bc-4847-9e1c-cd435bd940d0'
 
       await request(app)
-        .put(`/users/${userId}`)
+        .put(`/v1/users/${userId}`)
         .send({
           name: 'user name 2',
           email: 'email2@email.com'
@@ -80,7 +80,7 @@ describe('Users e2e', () => {
     })
   })
 
-  describe('DELETE /users/:id', () => {
+  describe('DELETE /v1/users/:id', () => {
     it('should delete an user', async () => {
       const userId = 'd7387bf2-37bc-4847-9e1c-cd435bd940d0'
       await prismaClient.user.create({
@@ -95,7 +95,7 @@ describe('Users e2e', () => {
       const token = new JWTAuthTokenProvider().generate(userId)
 
       await request(app)
-        .delete(`/users/${userId}`)
+        .delete(`/v1/users/${userId}`)
         .set('authorization', `Bearer ${token}`)
         .send()
         .expect(204)
@@ -107,11 +107,11 @@ describe('Users e2e', () => {
     it('should not be possible to delete an user without the JWT token', async () => {
       const userId = 'd7387bf2-37bc-4847-9e1c-cd435bd940d0'
 
-      await request(app).delete(`/users/${userId}`).send().expect(403)
+      await request(app).delete(`/v1/users/${userId}`).send().expect(403)
     })
   })
 
-  describe('PUT /users/:id/password', () => {
+  describe('PUT /v1/users/:id/password', () => {
     it('should update the user password', async () => {
       const userId = 'd7387bf2-37bc-4847-9e1c-cd435bd940d0'
       const hashedPassword = await new BCryptHashProvider().hash('123456')
@@ -128,7 +128,7 @@ describe('Users e2e', () => {
       const token = new JWTAuthTokenProvider().generate(userId)
 
       await request(app)
-        .put(`/users/${userId}/password`)
+        .put(`/v1/users/${userId}/password`)
         .set('authorization', `Bearer ${token}`)
         .send({
           currentPassword: '123456',
@@ -149,7 +149,7 @@ describe('Users e2e', () => {
       const userId = 'd7387bf2-37bc-4847-9e1c-cd435bd940d0'
 
       await request(app)
-        .put(`/users/${userId}/password`)
+        .put(`/v1/users/${userId}/password`)
         .send({
           currentPassword: '123456',
           newPassword: '12345678'

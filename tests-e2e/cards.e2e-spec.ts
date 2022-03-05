@@ -36,10 +36,10 @@ describe('Cards e2e', () => {
   beforeEach(async () => await prismaClient.card.deleteMany())
   afterAll(async () => await clearDatabase())
 
-  describe('POST /cards', () => {
+  describe('POST /v1/cards', () => {
     it('should create a card', async () => {
       await request(app)
-        .post('/cards')
+        .post('/v1/cards')
         .set('authorization', `Bearer ${token}`)
         .send({
           deckId,
@@ -62,7 +62,7 @@ describe('Cards e2e', () => {
 
     it('should not be possible to create a card without the JWT token', async () => {
       await request(app)
-        .post('/cards')
+        .post('/v1/cards')
         .send({
           deckId,
           originalText: 'original text',
@@ -72,7 +72,7 @@ describe('Cards e2e', () => {
     })
   })
 
-  describe('PUT /cards/:id', () => {
+  describe('PUT /v1/cards/:id', () => {
     it('should update a card', async () => {
       const cardId = '1e70d05a-6e65-403b-a5df-ff877f60d429'
 
@@ -87,7 +87,7 @@ describe('Cards e2e', () => {
       })
 
       await request(app)
-        .put(`/cards/${cardId}`)
+        .put(`/v1/cards/${cardId}`)
         .set('authorization', `Bearer ${token}`)
         .send({
           deckId,
@@ -112,7 +112,7 @@ describe('Cards e2e', () => {
       const cardId = '1e70d05a-6e65-403b-a5df-ff877f60d429'
 
       await request(app)
-        .put(`/cards/${cardId}`)
+        .put(`/v1/cards/${cardId}`)
         .send({
           deckId,
           originalText: 'original text 2',
@@ -122,7 +122,7 @@ describe('Cards e2e', () => {
     })
   })
 
-  describe('DELETE /cards/:id', () => {
+  describe('DELETE /v1/cards/:id', () => {
     it('should delete a card', async () => {
       const cardId = '1e70d05a-6e65-403b-a5df-ff877f60d429'
 
@@ -137,7 +137,7 @@ describe('Cards e2e', () => {
       })
 
       await request(app)
-        .delete(`/cards/${cardId}`)
+        .delete(`/v1/cards/${cardId}`)
         .set('authorization', `Bearer ${token}`)
         .send()
         .expect(204)
@@ -149,11 +149,11 @@ describe('Cards e2e', () => {
     it('should not be possible to delete a card without the JWT token', async () => {
       const cardId = '1e70d05a-6e65-403b-a5df-ff877f60d429'
 
-      await request(app).delete(`/cards/${cardId}`).expect(403)
+      await request(app).delete(`/v1/cards/${cardId}`).expect(403)
     })
   })
 
-  describe('POST /cards/:id/review', () => {
+  describe('POST /v1/cards/:id/review', () => {
     it('should create a card review', async () => {
       const cardId = '1e70d05a-6e65-403b-a5df-ff877f60d429'
 
@@ -168,7 +168,7 @@ describe('Cards e2e', () => {
       })
 
       await request(app)
-        .post(`/cards/${cardId}/review`)
+        .post(`/v1/cards/${cardId}/review`)
         .set('authorization', `Bearer ${token}`)
         .send({
           difficultyLevel: CardReviewDifficultyLevel.EASY
@@ -186,11 +186,11 @@ describe('Cards e2e', () => {
     it('should not be possible to create a card review without the JWT token', async () => {
       const cardId = '1e70d05a-6e65-403b-a5df-ff877f60d429'
 
-      await request(app).post(`/cards/${cardId}/review`).expect(403)
+      await request(app).post(`/v1/cards/${cardId}/review`).expect(403)
     })
   })
 
-  describe('GET /cards/study', () => {
+  describe('GET /v1/cards/study', () => {
     it('should return only the cards available for study', async () => {
       const cardIdAvailable = '1e70d05a-6e65-403b-a5df-ff877f60d429'
       const cardIdNotAvailable = 'cae35dd9-9545-4bf9-8d36-3fdf3de17f50'
@@ -219,7 +219,7 @@ describe('Cards e2e', () => {
       })
 
       await request(app)
-        .get('/cards/study')
+        .get('/v1/cards/study')
         .set('authorization', `Bearer ${token}`)
         .send()
         .expect(200)
@@ -270,7 +270,7 @@ describe('Cards e2e', () => {
       })
 
       await request(app)
-        .get('/cards/study')
+        .get('/v1/cards/study')
         .set('authorization', `Bearer ${token}`)
         .send()
         .expect(200)
@@ -281,7 +281,7 @@ describe('Cards e2e', () => {
     })
 
     it('should not be possible to return cards without the JWT token', async () => {
-      await request(app).post('/cards/study').expect(403)
+      await request(app).post('/v1/cards/study').expect(403)
     })
   })
 })

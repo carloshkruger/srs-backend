@@ -8,7 +8,7 @@ describe('ForgotPassword e2e', () => {
   beforeEach(async () => await prismaClient.user.deleteMany())
   afterAll(async () => await clearDatabase())
 
-  describe('POST /forgot-password', () => {
+  describe('POST /v1/forgot-password', () => {
     it('should create a request to change the password', async () => {
       const userId = 'd7387bf2-37bc-4847-9e1c-cd435bd940d0'
       const email = 'email@email.com'
@@ -21,7 +21,7 @@ describe('ForgotPassword e2e', () => {
         }
       })
 
-      await request(app).post('/forgot-password').send({ email }).expect(204)
+      await request(app).post('/v1/forgot-password').send({ email }).expect(204)
 
       const userTokenCount = await prismaClient.userToken.count()
       expect(userTokenCount).toBe(1)
@@ -30,13 +30,13 @@ describe('ForgotPassword e2e', () => {
     it('should return success even if the email does not exists', async () => {
       const email = 'email@email.com'
 
-      await request(app).post('/forgot-password').send({ email }).expect(204)
+      await request(app).post('/v1/forgot-password').send({ email }).expect(204)
       const userTokenCount = await prismaClient.userToken.count()
       expect(userTokenCount).toBe(0)
     })
   })
 
-  describe('POST /forgot-password/reset', () => {
+  describe('POST /v1/forgot-password/reset', () => {
     it('should reset the password', async () => {
       const userId = 'd7387bf2-37bc-4847-9e1c-cd435bd940d0'
       const token = '215698d0-a6cd-4481-b355-490e76b26cf7'
@@ -59,7 +59,7 @@ describe('ForgotPassword e2e', () => {
       })
 
       await request(app)
-        .post('/forgot-password/reset')
+        .post('/v1/forgot-password/reset')
         .send({
           token,
           password: '12345678'
