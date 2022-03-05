@@ -1,5 +1,5 @@
 export default {
-  '/forgot-password': {
+  '/v1/forgot-password': {
     post: {
       tags: ['ForgotPassword'],
       summary: 'Send an email to recover the password',
@@ -27,7 +27,7 @@ export default {
       }
     }
   },
-  '/forgot-password/reset': {
+  '/v1/forgot-password/reset': {
     post: {
       tags: ['ForgotPassword'],
       summary: 'Update the password',

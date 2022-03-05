@@ -9,7 +9,7 @@ const userIdParameter = {
 }
 
 export default {
-  '/users': {
+  '/v1/users': {
     post: {
       tags: ['Users'],
       summary: 'Create user with e-mail and password',
@@ -57,7 +57,7 @@ export default {
       }
     }
   },
-  '/users/{id}': {
+  '/v1/users/{id}': {
     put: {
       security: [{ bearerAuth: [] }],
       tags: ['Users'],
@@ -102,7 +102,7 @@ export default {
       }
     }
   },
-  '/users/{id}/password': {
+  '/v1/users/{id}/password': {
     put: {
       security: [{ bearerAuth: [] }],
       tags: ['Users'],

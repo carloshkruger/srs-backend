@@ -9,7 +9,7 @@ const cardIdParameter = {
 }
 
 export default {
-  '/cards': {
+  '/v1/cards': {
     post: {
       security: [{ bearerAuth: [] }],
       tags: ['Cards'],
@@ -67,7 +67,7 @@ export default {
       }
     }
   },
-  '/cards/{id}': {
+  '/v1/cards/{id}': {
     put: {
       security: [{ bearerAuth: [] }],
       tags: ['Cards'],
@@ -116,7 +116,7 @@ export default {
       }
     }
   },
-  '/cards/{id}/review': {
+  '/v1/cards/{id}/review': {
     post: {
       security: [{ bearerAuth: [] }],
       tags: ['Cards'],
@@ -146,7 +146,7 @@ export default {
       }
     }
   },
-  '/cards/study': {
+  '/v1/cards/study': {
     get: {
       security: [{ bearerAuth: [] }],
       tags: ['Cards'],

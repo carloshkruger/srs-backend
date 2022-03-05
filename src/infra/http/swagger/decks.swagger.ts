@@ -9,7 +9,7 @@ const deckIdParameter = {
 }
 
 export default {
-  '/decks': {
+  '/v1/decks': {
     post: {
       security: [{ bearerAuth: [] }],
       tags: ['Decks'],
@@ -60,7 +60,7 @@ export default {
       }
     }
   },
-  '/decks/:id': {
+  '/v1/decks/:id': {
     put: {
       security: [{ bearerAuth: [] }],
       tags: ['Decks'],
@@ -105,7 +105,7 @@ export default {
       }
     }
   },
-  '/decks/study': {
+  '/v1/decks/study': {
     get: {
       security: [{ bearerAuth: [] }],
       tags: ['Decks'],
@@ -151,7 +151,7 @@ export default {
       }
     }
   },
-  '/decks/{id}/cards': {
+  '/v1/decks/{id}/cards': {
     get: {
       security: [{ bearerAuth: [] }],
       tags: ['Decks'],

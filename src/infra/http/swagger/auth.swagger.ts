@@ -1,5 +1,5 @@
 export default {
-  '/auth': {
+  '/v1/auth': {
     post: {
       tags: ['Auth'],
       summary: 'Authenticate user with email and password',

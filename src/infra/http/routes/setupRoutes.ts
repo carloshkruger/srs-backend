@@ -8,11 +8,11 @@ import { usersRoutes } from './users.routes'
 const router = Router()
 
 export const setupRoutes = (app: Application): void => {
-  router.use(authRoutes)
-  router.use(cardsRoutes)
-  router.use(decksRoutes)
-  router.use(usersRoutes)
-  router.use(forgotPasswordRoutes)
+  router.use('/v1/', authRoutes)
+  router.use('/v1/', cardsRoutes)
+  router.use('/v1/', decksRoutes)
+  router.use('/v1/', usersRoutes)
+  router.use('/v1/', forgotPasswordRoutes)
 
   app.use(router)
 }
