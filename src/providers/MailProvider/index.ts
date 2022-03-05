@@ -1,6 +1,5 @@
-import { mailTemplateProvider } from '@providers/MailTemplateProvider'
-import { EtherealMailProvider } from './EtherealMailProvider'
+import { MailProviderStub } from './MailProviderStub'
 
-const mailProvider = new EtherealMailProvider(mailTemplateProvider)
+const mailProvider = new MailProviderStub()
 
 export { mailProvider }

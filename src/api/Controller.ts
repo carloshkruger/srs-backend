@@ -40,7 +40,7 @@ abstract class Controller {
     }
   }
 
-  protected serverError(): ControllerResponse {
+  protected serverError(): ControllerErrorResponse {
     return {
       statusCode: 500,
       body: {
@@ -49,7 +49,7 @@ abstract class Controller {
     }
   }
 
-  protected fail(error: Error): ControllerResponse {
+  protected fail(error: Error): ControllerErrorResponse {
     console.error(error)
 
     try {
@@ -70,4 +70,10 @@ interface ControllerResponse {
   body?: any
 }
 
-export { Controller, ControllerResponse }
+interface ControllerErrorResponse extends ControllerResponse {
+  body: {
+    error: string | string[]
+  }
+}
+
+export { Controller, ControllerErrorResponse, ControllerResponse }

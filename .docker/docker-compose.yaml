@@ -31,6 +31,7 @@ services:
 
   pgadmin:
     image: dpage/pgadmin4
+    restart: always
     environment:
       PGADMIN_DEFAULT_EMAIL: 'carloshkruger@gmail.com.br'
       PGADMIN_DEFAULT_PASSWORD: '123456'
@@ -40,6 +41,23 @@ services:
       - postgres
     networks:
       - srs-app-network
+
+  localstack:
+    restart: always
+    container_name: localstack
+    image: localstack/localstack
+    network_mode: bridge
+    ports:
+      - '127.0.0.1:4510-4559:4510-4559' # external service port range
+      - '127.0.0.1:4566:4566' # LocalStack Edge Proxy
+    environment:
+      - SERVICES=sns
+      - DATA_DIR=${DATA_DIR-}
+      - HOST_TMP_FOLDER=${TMPDIR:-/tmp/}localstack
+      - DOCKER_HOST=unix:///var/run/docker.sock
+    volumes:
+      - '${TMPDIR:-/tmp}/localstack:/tmp/localstack'
+      - '/var/run/docker.sock:/var/run/docker.sock'
 
 networks:
   srs-app-network:

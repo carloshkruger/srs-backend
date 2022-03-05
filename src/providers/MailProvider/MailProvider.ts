@@ -1,4 +1,4 @@
-import ParseMailTemplate from '@providers/MailTemplateProvider/MailTemplateProvider.interface'
+import { ParseMailTemplate } from '@providers/MailTemplateProvider/MailTemplateProvider.interface'
 
 interface MailContact {
   name: string

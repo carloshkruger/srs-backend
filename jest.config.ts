@@ -18,7 +18,8 @@ module.exports = {
     '!src/shared/PrismaUtils.ts',
     '!src/repositories/**',
     '!src/providers/MailTemplateProvider/**',
-    '!src/providers/MailProvider/**'
+    '!src/providers/MailProvider/**',
+    '!src/**/errors/**'
   ],
   coverageDirectory: 'coverage',
   coverageReporters: ['text-summary', 'lcov'],
