@@ -1,13 +1,3 @@
-const userIdParameter = {
-  in: 'path',
-  name: 'id',
-  schema: {
-    type: 'string'
-  },
-  required: true,
-  example: '123'
-}
-
 export default {
   '/v1/users': {
     post: {
@@ -55,14 +45,11 @@ export default {
           }
         }
       }
-    }
-  },
-  '/v1/users/{id}': {
+    },
     put: {
       security: [{ bearerAuth: [] }],
       tags: ['Users'],
       summary: 'Update user',
-      parameters: [userIdParameter],
       requestBody: {
         content: {
           'application/json': {
@@ -94,7 +81,6 @@ export default {
       security: [{ bearerAuth: [] }],
       tags: ['Users'],
       summary: 'Delete user',
-      parameters: [userIdParameter],
       responses: {
         204: {
           description: 'Success'
@@ -102,12 +88,11 @@ export default {
       }
     }
   },
-  '/v1/users/{id}/password': {
+  '/v1/users/password': {
     put: {
       security: [{ bearerAuth: [] }],
       tags: ['Users'],
       summary: 'Update user password',
-      parameters: [userIdParameter],
       requestBody: {
         content: {
           'application/json': {

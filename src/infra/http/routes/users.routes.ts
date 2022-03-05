@@ -56,39 +56,28 @@ usersRoutes.post(
   )
 )
 usersRoutes.put(
-  '/users/:id',
+  '/users',
   celebrate({
     [Segments.BODY]: {
       name: Joi.string().required(),
       email: Joi.string().email().required()
-    },
-    [Segments.PARAMS]: {
-      id: Joi.string().uuid().required()
     }
   }),
   authorization(),
   updateUserController.execute.bind(updateUserController)
 )
 usersRoutes.delete(
-  '/users/:id',
+  '/users',
   authorization(),
-  celebrate({
-    [Segments.PARAMS]: {
-      id: Joi.string().uuid().required()
-    }
-  }),
   deleteUserController.execute.bind(deleteUserController)
 )
 usersRoutes.put(
-  '/users/:id/password',
+  '/users/password',
   authorization(),
   celebrate({
     [Segments.BODY]: {
       currentPassword: passwordValidation,
       newPassword: passwordValidation
-    },
-    [Segments.PARAMS]: {
-      id: Joi.string().uuid().required()
     }
   }),
   updatePasswordController.execute.bind(updatePasswordController)

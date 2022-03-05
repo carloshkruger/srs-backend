@@ -23,7 +23,7 @@ describe('UpdateUserController', () => {
         name: 'Test User',
         email: 'testuser@email.com'
       },
-      params: {
+      user: {
         id: '123123'
       }
     } as unknown as Request)

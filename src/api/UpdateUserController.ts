@@ -8,7 +8,7 @@ export class UpdateUserController extends Controller {
   }
 
   public async handle(request: Request): Promise<ControllerResponse> {
-    const { id } = request.params
+    const id = request.user.id
     const { name, email } = request.body
 
     await this.useCase.execute({ id, name, email })
