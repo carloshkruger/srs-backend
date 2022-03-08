@@ -19,7 +19,8 @@ module.exports = {
     '!src/repositories/**',
     '!src/providers/MailTemplateProvider/**',
     '!src/providers/MailProvider/**',
-    '!src/**/errors/**'
+    '!src/**/errors/**',
+    '!src/shared/Logger.ts'
   ],
   coverageDirectory: 'coverage',
   coverageReporters: ['text-summary', 'lcov'],

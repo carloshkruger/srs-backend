@@ -1,3 +1,5 @@
+import 'express-async-errors'
+import { Logger } from '@shared/Logger'
 import { connect as connectDatabase } from '@shared/PrismaUtils'
 
 const bootstrap = async () => {
@@ -7,7 +9,7 @@ const bootstrap = async () => {
 
   const port = process.env.PORT
 
-  app.listen(port, () => console.log('Server online'))
+  app.listen(port, () => Logger.info('Server online'))
 }
 
 bootstrap()

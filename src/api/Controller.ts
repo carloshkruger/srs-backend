@@ -5,13 +5,7 @@ abstract class Controller {
     request: Request,
     response: Response
   ): Promise<ControllerResponse> {
-    let controllerResponse: ControllerResponse
-
-    try {
-      controllerResponse = await this.handle(request)
-    } catch (error) {
-      controllerResponse = this.fail(error)
-    }
+    const controllerResponse = await this.handle(request)
 
     return response
       .status(controllerResponse.statusCode)
@@ -37,30 +31,6 @@ abstract class Controller {
   protected noContent(): ControllerResponse {
     return {
       statusCode: 204
-    }
-  }
-
-  protected serverError(): ControllerErrorResponse {
-    return {
-      statusCode: 500,
-      body: {
-        error: 'Internal server error'
-      }
-    }
-  }
-
-  protected fail(error: Error): ControllerErrorResponse {
-    console.error(error)
-
-    try {
-      return {
-        statusCode: 400,
-        body: {
-          error: error.message?.trim()
-        }
-      }
-    } catch {
-      return this.serverError()
     }
   }
 }

@@ -1,4 +1,5 @@
 import { ControllerErrorResponse } from '@api/Controller'
+import { Logger } from '@shared/Logger'
 import { AppError } from '@useCases/errors/AppError'
 import { CelebrateError, isCelebrateError } from 'celebrate'
 import { Request, Response, NextFunction } from 'express'
@@ -9,7 +10,7 @@ export const errorHandler = (
   response: Response,
   next: NextFunction
 ) => {
-  console.log(error)
+  Logger.error(error)
 
   const { body, statusCode } = formatErrorMessage(error)
 
