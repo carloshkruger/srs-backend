@@ -5,6 +5,20 @@
 This is the backend for a Spaced Repetition System, a learning technique where newly introduced and more difficult flashcards are shown more frequently, while older and less difficult flashcards are shown less frequently in order to exploit the psychological spacing effect.
 For this project, I tried to use concepts of SOLID, Clean Architecture and TDD.
 
+## Start the application
+
+```
+  create the .env file on root and copy the content from .env.example
+
+  cd .docker
+
+  docker-compose up -d
+
+  cd ../
+
+  npm run start:dev
+```
+
 ## Functionalities
 
 - Create/update/delete user
