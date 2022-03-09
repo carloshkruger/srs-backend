@@ -7,6 +7,7 @@ import { setupHttpParameterPolution } from './middlewares/setupHttpParameterPolu
 import { setupCors } from './middlewares/setupCors'
 import { setupSwagger } from './middlewares/setupSwagger'
 import { errorHandler } from './middlewares/errorHandler'
+import { setupSentry } from './middlewares/setupSentry'
 
 const app = express()
 
@@ -18,6 +19,7 @@ setupHttpParameterPolution(app)
 setupCors(app)
 setupRoutes(app)
 setupSwagger(app)
+setupSentry(app)
 app.use(errorHandler)
 
 export default app
