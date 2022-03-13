@@ -204,6 +204,53 @@ describe('Decks e2e', () => {
     })
   })
 
+  describe('GET /v1/decks/:id/cards', () => {
+    it('should find all deck cards, even the ones not available for study', async () => {
+      const deckId = 'a02413e0-4ee9-4f5d-be85-ca0e8511030c'
+      const futureDate = new Date()
+      futureDate.setDate(futureDate.getDate() + 1)
+
+      await prismaClient.deck.create({
+        data: {
+          id: deckId,
+          name: 'deck name',
+          description: 'deck description',
+          userId,
+          cards: {
+            create: [
+              {
+                id: 'eabe71e4-cbd2-409a-bac6-0d0a984a21d8',
+                audioFileName: 'audio.mp3',
+                originalText: 'original text',
+                translatedText: 'translated text',
+                nextReviewAt: new Date()
+              },
+              {
+                id: '2229832e-85b9-4d8e-aff5-bcf32286670d',
+                audioFileName: 'audio2.mp3',
+                originalText: 'original text 2',
+                translatedText: 'translated text 2',
+                nextReviewAt: futureDate
+              }
+            ]
+          }
+        }
+      })
+
+      await request(app)
+        .get(`/v1/decks/${deckId}/cards`)
+        .set('authorization', `Bearer ${token}`)
+        .expect(200)
+        .expect((response) => expect(response.body.cards).toHaveLength(2))
+    })
+
+    it('should not be possible to find all deck cards without the JWT token', async () => {
+      const deckId = 'a02413e0-4ee9-4f5d-be85-ca0e8511030c'
+
+      await request(app).get(`/v1/decks/${deckId}/cards`).expect(403)
+    })
+  })
+
   describe('GET /v1/decks/study', () => {
     it('should return a list of decks and quantity of cards', async () => {
       await prismaClient.deck.create({

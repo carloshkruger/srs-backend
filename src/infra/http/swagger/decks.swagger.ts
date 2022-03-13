@@ -150,6 +150,50 @@ export default {
       }
     }
   },
+  '/v1/decks/:id/cards': {
+    get: {
+      security: [{ bearerAuth: [] }],
+      tags: ['Decks'],
+      summary: 'List all deck cards',
+      responses: {
+        200: {
+          description: 'Success',
+          content: {
+            'application/json': {
+              schema: {
+                type: 'object',
+                properties: {
+                  cards: {
+                    type: 'array',
+                    items: {
+                      type: 'object',
+                      properties: {
+                        id: {
+                          type: 'string'
+                        },
+                        deckId: {
+                          type: 'string'
+                        },
+                        originalText: {
+                          type: 'string'
+                        },
+                        translatedText: {
+                          type: 'string'
+                        },
+                        audioFileName: {
+                          type: 'string'
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
   '/v1/decks/study': {
     get: {
       security: [{ bearerAuth: [] }],
