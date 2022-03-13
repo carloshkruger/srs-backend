@@ -1,11 +1,13 @@
 import { CreateDeckController } from '@api/CreateDeckController'
 import { DeleteDeckController } from '@api/DeleteDeckController'
+import { FindDeckInfoController } from '@api/FindDeckInfoController'
 import { ListDecksForStudyController } from '@api/ListDecksForStudyController'
 import { UpdateDeckController } from '@api/UpdateDeckController'
 import { storageProvider } from '@providers/StorageProvider'
 import { usersRepository, decksRepository } from '@repositories/index'
 import { CreateDeckUseCase } from '@useCases/CreateDeckUseCase'
 import { DeleteDeckUseCase } from '@useCases/DeleteDeckUseCase'
+import { FindDeckInfoUseCase } from '@useCases/FindDeckInfoUseCase'
 import { ListDecksForStudyUseCase } from '@useCases/ListDecksForStudyUseCase'
 import { UpdateDeckUseCase } from '@useCases/UpdateDeckUseCase'
 import { celebrate, Segments } from 'celebrate'
@@ -42,6 +44,9 @@ const listDecksForStudyController = new ListDecksForStudyController(
   listDecksForStudyUseCase
 )
 
+const findDeckInfoUseCase = new FindDeckInfoUseCase(decksRepository)
+const findDeckInfoController = new FindDeckInfoController(findDeckInfoUseCase)
+
 decksRoutes.use('/decks', authorization())
 
 decksRoutes.post(
@@ -49,7 +54,7 @@ decksRoutes.post(
   celebrate({
     [Segments.BODY]: {
       name: Joi.string().required(),
-      description: Joi.string().required()
+      description: Joi.string().optional()
     }
   }),
   createDeckController.execute.bind(createDeckController)
@@ -79,6 +84,15 @@ decksRoutes.delete(
 decksRoutes.get(
   '/decks/study',
   listDecksForStudyController.execute.bind(listDecksForStudyController)
+)
+decksRoutes.get(
+  '/decks/:id',
+  celebrate({
+    [Segments.PARAMS]: {
+      id: Joi.string().uuid().required()
+    }
+  }),
+  deleteDeckController.execute.bind(findDeckInfoController)
 )
 
 export { decksRoutes }

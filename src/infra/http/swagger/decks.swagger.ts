@@ -103,13 +103,12 @@ export default {
           description: 'Success'
         }
       }
-    }
-  },
-  '/v1/decks/study': {
+    },
     get: {
       security: [{ bearerAuth: [] }],
       tags: ['Decks'],
-      summary: 'List decks for study',
+      summary: 'Find deck info',
+      parameters: [deckIdParameter],
       responses: {
         200: {
           description: 'Success',
@@ -151,12 +150,11 @@ export default {
       }
     }
   },
-  '/v1/decks/{id}/cards': {
+  '/v1/decks/study': {
     get: {
       security: [{ bearerAuth: [] }],
       tags: ['Decks'],
-      summary: 'List all deck cards',
-      parameters: [deckIdParameter],
+      summary: 'List decks for study',
       responses: {
         200: {
           description: 'Success',
@@ -165,26 +163,28 @@ export default {
               schema: {
                 type: 'object',
                 properties: {
+                  deck: {
+                    type: 'object',
+                    properties: {
+                      id: {
+                        type: 'string'
+                      },
+                      name: {
+                        type: 'string'
+                      },
+                      description: {
+                        type: 'string'
+                      }
+                    }
+                  },
                   cards: {
-                    type: 'array',
-                    items: {
-                      type: 'object',
-                      properties: {
-                        id: {
-                          type: 'string'
-                        },
-                        deckId: {
-                          type: 'string'
-                        },
-                        originalText: {
-                          type: 'string'
-                        },
-                        translatedText: {
-                          type: 'string'
-                        },
-                        audioFileName: {
-                          type: 'string'
-                        }
+                    type: 'object',
+                    properties: {
+                      totalQuantity: {
+                        type: 'number'
+                      },
+                      availableForStudyQuantity: {
+                        type: 'number'
                       }
                     }
                   }

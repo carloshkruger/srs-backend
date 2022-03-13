@@ -1,5 +1,6 @@
 import { Deck } from '@entities/Deck'
 import {
+  DeckInfoResponse,
   DecksRepository,
   FindAllAndCardsQuantityByUserIdResponse
 } from '@repositories/DecksRepository'
@@ -53,6 +54,38 @@ export class PrismaDecksRepository implements DecksRepository {
         id
       }
     })
+  }
+
+  async findDeckInfo(id: string): Promise<DeckInfoResponse> {
+    const data = await prismaClient.$queryRaw<any>`
+      SELECT decks.*,
+	           (SELECT COUNT(*)
+			          FROM cards
+			         WHERE cards.deck_id = decks.id) AS cards_count,
+			       (SELECT COUNT(*)
+			          FROM cards
+			         WHERE cards.deck_id = decks.id
+			           AND cards.next_review_at < NOW()) AS cards_available_count
+        FROM decks
+       WHERE decks.id = ${id}
+    `
+
+    if (!data.length) {
+      return undefined
+    }
+
+    const item = data[0]
+
+    return {
+      id: item.id,
+      name: item.name,
+      description: item.description,
+      userId: item.user_id,
+      cards: {
+        totalQuantity: Number(item.cards_count),
+        availableForStudyQuantity: Number(item.cards_available_count)
+      }
+    }
   }
 
   async findAllAndCardsQuantityByUserId(

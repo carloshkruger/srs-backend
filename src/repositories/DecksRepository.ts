@@ -5,9 +5,21 @@ export interface DecksRepository {
   findByNameAndUserId(name: string, userId: string): Promise<Deck>
   save(deck: Deck): Promise<void>
   deleteById(deckId: string): Promise<void>
+  findDeckInfo(id: string): Promise<DeckInfoResponse>
   findAllAndCardsQuantityByUserId(
     userId: string
   ): Promise<FindAllAndCardsQuantityByUserIdResponse[]>
+}
+
+export interface DeckInfoResponse {
+  id: string
+  name: string
+  description: string
+  userId: string
+  cards: {
+    totalQuantity: number
+    availableForStudyQuantity: number
+  }
 }
 
 export interface FindAllAndCardsQuantityByUserIdResponse {

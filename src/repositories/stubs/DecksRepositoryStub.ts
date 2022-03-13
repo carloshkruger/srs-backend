@@ -1,5 +1,6 @@
 import { Deck } from '@entities/Deck'
 import {
+  DeckInfoResponse,
   DecksRepository,
   FindAllAndCardsQuantityByUserIdResponse
 } from '@repositories/DecksRepository'
@@ -15,6 +16,9 @@ export class DecksRepositoryStub implements DecksRepository {
     return Promise.resolve(undefined)
   }
   async deleteById(): Promise<void> {
+    return Promise.resolve(undefined)
+  }
+  async findDeckInfo(): Promise<DeckInfoResponse> {
     return Promise.resolve(undefined)
   }
   async findAllAndCardsQuantityByUserId(): Promise<
