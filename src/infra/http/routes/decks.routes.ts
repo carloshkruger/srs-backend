@@ -79,7 +79,7 @@ decksRoutes.put(
   celebrate({
     [Segments.BODY]: {
       name: Joi.string().required(),
-      description: Joi.string().required()
+      description: Joi.string().optional()
     },
     [Segments.PARAMS]: {
       id: Joi.string().uuid().required()
